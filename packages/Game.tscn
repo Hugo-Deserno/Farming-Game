@@ -1,0 +1,124 @@
+[gd_scene load_steps=16 format=3 uid="uid://c8rjpfbx4ymmk"]
+
+[ext_resource type="PackedScene" uid="uid://bh2yewd4k7lhq" path="res://packages/Character.tscn" id="1_ab76b"]
+[ext_resource type="Script" path="res://Scripts/debug/DebugNode.cs" id="2_7i2mg"]
+[ext_resource type="Script" path="res://Scripts/DemolitionTool.cs" id="3_37tre"]
+[ext_resource type="Script" path="res://Scripts/Placing/GridHandler.cs" id="4_t4ivg"]
+[ext_resource type="Script" path="res://Scripts/Placing/VoxelGridHandler.cs" id="5_bimc3"]
+[ext_resource type="Script" path="res://Scripts/PlotBorder.cs" id="6_k5v5h"]
+[ext_resource type="Script" path="res://Scripts/debug/Fps.cs" id="7_4hpjl"]
+[ext_resource type="PackedScene" uid="uid://d16j5v73uslbu" path="res://packages/inventory.tscn" id="8_fqyuq"]
+[ext_resource type="Script" path="res://Scripts/Inventory/inventory.cs" id="9_gp5er"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7i53h"]
+
+[sub_resource type="Sky" id="Sky_vuvei"]
+sky_material = SubResource("ProceduralSkyMaterial_7i53h")
+
+[sub_resource type="Environment" id="Environment_18hce"]
+background_mode = 2
+background_color = Color(0, 0.953, 89.941, 0.118)
+background_energy_multiplier = 4.0
+sky = SubResource("Sky_vuvei")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xmnso"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0)
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_4b8ae"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_0jcmi"]
+data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
+
+[node name="Game" type="Node3D"]
+
+[node name="ImportantResources" type="Node" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="ImportantResources"]
+environment = SubResource("Environment_18hce")
+
+[node name="Character" parent="ImportantResources" instance=ExtResource("1_ab76b")]
+
+[node name="DebugNode" type="Node" parent="ImportantResources"]
+script = ExtResource("2_7i2mg")
+
+[node name="CameraBounds" type="Node" parent="ImportantResources"]
+
+[node name="CameraBoundMaxX" type="Node3D" parent="ImportantResources/CameraBounds"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.1762, 0, 9.32377)
+
+[node name="CameraBoundMinX" type="Node3D" parent="ImportantResources/CameraBounds"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.176209, 0, 9.32377)
+
+[node name="CameraBoundMaxY" type="Node3D" parent="ImportantResources/CameraBounds"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.1762, 0, 19.3238)
+
+[node name="CameraBoundMinY" type="Node3D" parent="ImportantResources/CameraBounds"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.1762, 0, -0.676231)
+
+[node name="DemolitionTool" type="Node" parent="ImportantResources"]
+script = ExtResource("3_37tre")
+
+[node name="VisualStorage" type="Node" parent="ImportantResources/DemolitionTool"]
+
+[node name="PlacingSystem" type="Node" parent="ImportantResources"]
+
+[node name="GridSystem3DStorage" type="Node" parent="ImportantResources/PlacingSystem"]
+script = ExtResource("4_t4ivg")
+
+[node name="VoxelGrid" type="Node" parent="ImportantResources/PlacingSystem"]
+script = ExtResource("5_bimc3")
+
+[node name="PlacedStorage" type="Node" parent="ImportantResources/PlacingSystem"]
+
+[node name="VisualStorage" type="Node" parent="ImportantResources/PlacingSystem"]
+
+[node name="VoxelVisualization" type="Node" parent="ImportantResources/PlacingSystem"]
+
+[node name="RayCastScanner" type="MeshInstance3D" parent="ImportantResources/PlacingSystem"]
+material_override = SubResource("StandardMaterial3D_xmnso")
+mesh = SubResource("PlaneMesh_4b8ae")
+skeleton = NodePath("../../..")
+
+[node name="FloorColision" type="StaticBody3D" parent="ImportantResources/PlacingSystem/RayCastScanner"]
+
+[node name="Collision" type="CollisionShape3D" parent="ImportantResources/PlacingSystem/RayCastScanner/FloorColision"]
+shape = SubResource("ConcavePolygonShape3D_0jcmi")
+
+[node name="PlotBorderFence" type="Node" parent="ImportantResources"]
+script = ExtResource("6_k5v5h")
+
+[node name="DebugUI" type="Control" parent="ImportantResources"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Fps" type="RichTextLabel" parent="ImportantResources/DebugUI"]
+layout_mode = 0
+offset_right = 94.0
+offset_bottom = 25.0
+text = "fps: 123"
+scroll_active = false
+script = ExtResource("7_4hpjl")
+
+[node name="VoxelDisplay" type="RichTextLabel" parent="ImportantResources/DebugUI"]
+layout_mode = 0
+offset_top = 25.0
+offset_right = 332.0
+offset_bottom = 50.0
+text = "Current Voxel:"
+scroll_active = false
+
+[node name="VoxelType" type="RichTextLabel" parent="ImportantResources/DebugUI"]
+layout_mode = 0
+offset_top = 50.0
+offset_right = 332.0
+offset_bottom = 75.0
+text = "Voxel Type:"
+scroll_active = false
+
+[node name="Inventory" parent="ImportantResources" instance=ExtResource("8_fqyuq")]
+script = ExtResource("9_gp5er")

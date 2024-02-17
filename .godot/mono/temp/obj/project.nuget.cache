@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "Gji41wPHxrPwPy8U9P/P8RibgO+Rlss+q5Noi0q30iggQvKLhKpaHtnNY3C79AspJZUjq/btRn+rL/deHTkpsQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Eigenaar\\OneDrive\\Documents\\Projects_Godot\\Farming-Game\\Projects Godot.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Eigenaar\\.nuget\\packages\\godot.sourcegenerators\\4.2.1\\godot.sourcegenerators.4.2.1.nupkg.sha512",
+    "C:\\Users\\Eigenaar\\.nuget\\packages\\godotsharp\\4.2.1\\godotsharp.4.2.1.nupkg.sha512",
+    "C:\\Users\\Eigenaar\\.nuget\\packages\\godotsharpeditor\\4.2.1\\godotsharpeditor.4.2.1.nupkg.sha512",
+    "C:\\Users\\Eigenaar\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.26\\microsoft.netcore.app.ref.6.0.26.nupkg.sha512",
+    "C:\\Users\\Eigenaar\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.26\\microsoft.windowsdesktop.app.ref.6.0.26.nupkg.sha512",
+    "C:\\Users\\Eigenaar\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.26\\microsoft.aspnetcore.app.ref.6.0.26.nupkg.sha512"
+  ],
+  "logs": []
+}

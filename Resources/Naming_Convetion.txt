@@ -1,0 +1,9 @@
+Basic variable naming convention
+cuz im dumb;
+
+Public fields > All Caps
+|
+Private / regular variables > Pascal Case
+|
+Method Parameters > Start with a underscore
+Each nested function adds one underscore to teh variable
