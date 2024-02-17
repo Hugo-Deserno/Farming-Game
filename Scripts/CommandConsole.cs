@@ -19,13 +19,16 @@ public partial class CommandConsole : Node
 			["Game"] = null,
 			["Grid"] = null,
 			["Placement"] = null,
+			["Inventory"] = null,
 			["Data"] = null,
 		},
 		["Stack2"] = new Godot.Collections.Dictionary<string,string>{
 			["LoadArchive"] = "Game", // loads file
 
 			["SaveArchive"] = "Data", // saves file
-			["ClearArchive"] = "Data", // removes file
+			
+			["InventoryArchive"] = "Inventory", // prints the entire inventory;
+			["Add"] = "Inventory", // Adds a item to the inventory
 
 			["ShowVoxels"] = "Grid", // shows voxel grid
 			["ShowGrid"] = "Grid", // shows normal grid
@@ -191,6 +194,15 @@ public partial class CommandExecuter : CommandConsole {
 
 			GridHandler.PLACING_SYSTEM = new GridSystem3D((string)_Parameters[0]);
 			GridHandler.PLACING_SYSTEM.Enable();
+		} else if(_Command == "InventoryArchive") {
+			if(!GAME_ENABLED) {return;}
+			InventoryData.DebugInventory();
+		} else if(_Command == "Add") {
+			if(!GAME_ENABLED) {return;}
+
+			int Amount = (int)Convert.ToInt32(_Parameters[1]);
+			InventoryData.AddItemToDataBase((string)_Parameters[0],Amount);
+			GD.Print("Added " + Amount + " Of " + (string)_Parameters[0] + " To your inventory");
 		}
 	}
 }

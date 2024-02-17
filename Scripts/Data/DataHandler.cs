@@ -309,7 +309,7 @@ public partial class StaticDataHandler : DataHandler {
                 Variant? CurrentOldPatchedVar = Get(CurrentDataTreeCopy,PatchName,_OldPatch);
 
                 if(CurrentOldPatchedVar != null ) {
-                    if(PatchChild.VariantType == Variant.Type.Dictionary && ((Godot.Collections.Dictionary<string,Variant>)PatchChild).Count == 0) {
+                    if(PatchChild.VariantType == Variant.Type.Dictionary && ((Godot.Collections.Dictionary<string,Variant>)PatchChild).Count == 0 || PatchChild.VariantType != Variant.Type.Dictionary) {
                         Set(CurrentDataTreeCopy,PatchName,(Variant)CurrentOldPatchedVar,RemappedPatch);
                     }
                 } else {

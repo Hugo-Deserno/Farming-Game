@@ -40,6 +40,7 @@ public struct DataStruct {
             ["2"] = 0, // Stone
             ["3"] = 0, // Wood
         },
+        ["A"] = new Godot.Collections.Dictionary<string,int> {}, // inventory history
     };
 
     // main Data

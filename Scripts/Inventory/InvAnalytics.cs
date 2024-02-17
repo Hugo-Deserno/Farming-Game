@@ -6,6 +6,7 @@ using Godot;
 public partial class InvAnalytics : DataRepository {
     // Public shit
     public static Dictionary<string,int> PLAYER_DATA = new Dictionary<string, int>();
+    public static Dictionary<string,int> PLAYER_HISTORY_DATA = new Dictionary<string, int>();
 
     /// Decyrpt a number into data type
     // do i love data ............... :]
@@ -41,8 +42,8 @@ public partial class InvAnalytics : DataRepository {
 
     // Writes a updated data value to the json
     // with the dumb ass get function which i cant wrap my head around
-    public static void WriteBufferData(string TypeName, int Amount) {
-        int? Int32DataEntry = EncryptDataEntry(TypeName);
+    public static void WriteBufferData(string _TypeName, int _Amount, int _History) {
+        int? Int32DataEntry = EncryptDataEntry(_TypeName);
 
         if(Int32DataEntry == null) {
             return;
@@ -53,11 +54,22 @@ public partial class InvAnalytics : DataRepository {
                 [0] = "I", 
                 }, // emptyt dict cuz we fecthing a non nested member
                 ConvertNullifiedInt.ToString(),
-                Amount,
+                _Amount,
                 DataHandler.DATA_FILE
             );
 
-            PLAYER_DATA[TypeName] = Amount;
+            // Set history
+            DataHandler.Set(
+                new System.Collections.Generic.Dictionary<int, string>{
+                [0] = "A", 
+                }, // emptyt dict cuz we fecthing a non nested member
+                ConvertNullifiedInt.ToString(),
+                _History,
+                DataHandler.DATA_FILE
+            );
+
+            PLAYER_DATA[_TypeName] = _Amount;
+            PLAYER_HISTORY_DATA[_TypeName] = _History;
         }
     }
 
@@ -71,9 +83,23 @@ public partial class InvAnalytics : DataRepository {
             DataHandler.DATA_FILE
         );
 
+        Godot.Collections.Dictionary<string,int> ImportedItemHistory  = (Godot.Collections.Dictionary<string,int>)DataHandler.Get(
+	        new System.Collections.Generic.Dictionary<int, string>{}, // emptyt dict cuz we fecthing a non nested member
+			"A",
+            DataHandler.DATA_FILE
+        );
+
         // We Port that shit over
         foreach((string TypeName, Variant IntValue) in InmportedJsonData) {
-            PLAYER_DATA.Add(DecryptDataEntry(TypeName),(int)IntValue);
+            string DecryptedData = DecryptDataEntry(TypeName);
+            PLAYER_DATA.Add(DecryptedData,(int)IntValue);
+
+            // Item history
+            if(ImportedItemHistory.ContainsKey(TypeName)) {
+                PLAYER_HISTORY_DATA.Add(DecryptedData,ImportedItemHistory[TypeName]);
+            } else {
+                PLAYER_HISTORY_DATA.Add(DecryptedData,0);
+            }
         }
     }
 }

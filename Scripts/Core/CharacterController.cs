@@ -220,6 +220,11 @@ public partial class CharacterController : CharacterBody3D
         }
 		*/
 
+		// For Scrolling
+		if(Inventory.IS_ON_MAIN_UI_ELEMENT) {
+			return;
+		}
+
 		// Input Related stuff
         if(Input.IsActionJustReleased("Movement_Zoom_Down")) {
             RawFieldOfViewScroll = Math.Clamp(RawFieldOfViewScroll + 3,-45,0);

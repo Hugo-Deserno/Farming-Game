@@ -8,7 +8,7 @@
 [ext_resource type="Script" path="res://Scripts/PlotBorder.cs" id="6_k5v5h"]
 [ext_resource type="Script" path="res://Scripts/debug/Fps.cs" id="7_4hpjl"]
 [ext_resource type="PackedScene" uid="uid://d16j5v73uslbu" path="res://packages/inventory.tscn" id="8_fqyuq"]
-[ext_resource type="Script" path="res://Scripts/Inventory/inventory.cs" id="9_gp5er"]
+[ext_resource type="Script" path="res://Scripts/Inventory/Inventory.cs" id="9_pffdt"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7i53h"]
 
@@ -121,4 +121,4 @@ text = "Voxel Type:"
 scroll_active = false
 
 [node name="Inventory" parent="ImportantResources" instance=ExtResource("8_fqyuq")]
-script = ExtResource("9_gp5er")
+script = ExtResource("9_pffdt")
