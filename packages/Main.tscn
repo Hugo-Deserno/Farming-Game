@@ -1,7 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://b5gt0yfc3wo63"]
+[gd_scene load_steps=6 format=3 uid="uid://b5gt0yfc3wo63"]
 
 [ext_resource type="Script" path="res://Scripts/CommandConsole.cs" id="1_4xe8j"]
-[ext_resource type="Script" path="res://packages/LSP.cs" id="2_l81gj"]
 [ext_resource type="Script" path="res://Scripts/Core/MouseCursor.cs" id="2_lvgrj"]
 [ext_resource type="Texture2D" uid="uid://c7u0o6ypmnfg8" path="res://Images/Mouse_Cursor.png" id="3_kd5td"]
 
@@ -39,7 +38,6 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_aal30")
 text = "LSP
 
 "
-script = ExtResource("2_l81gj")
 
 [node name="Console" type="TextEdit" parent="CommandConsole/ConsoleController"]
 visible = false
