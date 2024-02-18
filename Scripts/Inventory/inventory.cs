@@ -1,8 +1,6 @@
 using Godot;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Runtime.InteropServices;
 
 public partial class Inventory : Control
 {
@@ -43,7 +41,7 @@ public partial class Inventory : Control
 			foreach((string ItemName, int Amount) in _DataPacket) {
 				InvAnalytics.WriteBufferData(ItemName,Amount,InvAnalytics.PLAYER_HISTORY_DATA[ItemName]); // write to buffer so it fills missing data gaps
 				if(Amount > 0) {
-					InventoryData.AddItemToDataBase(ItemName,Amount,null);
+					InventoryData.AddItemToDataBase(ItemName,Amount,null,false);
 				}
 			}
 			InventoryHandler.DrawInventory();
@@ -105,7 +103,7 @@ public partial class Inventory : Control
 public partial class InventoryData : Inventory {
 	// Adds items to inventory
 	// handles minus aswell as posetive values
-	public static void AddItemToDataBase(string _ItemName, int _DesiredValue, int? _History) { // pass in null in history if you want it to retain its value
+	public static void AddItemToDataBase(string _ItemName, int _DesiredValue, int? _History, bool _FuckWithHistory) { // pass in null in history if you want it to retain its value
 		// Only write when needed
 		if(InvAnalytics.PLAYER_DATA[_ItemName] != _DesiredValue || InvAnalytics.PLAYER_HISTORY_DATA[_ItemName] != _History) {
 			_History = _History == null ? InvAnalytics.PLAYER_HISTORY_DATA[_ItemName] : _History;
@@ -114,7 +112,7 @@ public partial class InventoryData : Inventory {
 		
 		// Decides what to do
 		if(_DesiredValue > 0) {
-			InventoryHandler.AddToInventory(_ItemName);
+			InventoryHandler.AddToInventory(_ItemName,_FuckWithHistory);
 		} else {
 			InventoryHandler.RemoveFromInventory(_ItemName);
 		}
@@ -176,11 +174,13 @@ public partial class InventoryHandler : Inventory {
 			// so on and so on
 			
 			// move the history one down
+
+			// Remove empty collums aka when there is no entry in a row
 		}
 	}
 
 	// Adds a selecetyed item to inventory becaus it likes
-	public static void AddToInventory(string _ItemName) {
+	public static void AddToInventory(string _ItemName, bool _FuckWithHistory) { // for clarification fuckwithHistory means if it should change the item age, aka plz i dont my data to be overwriten
 		(bool IsValid, int? _, int? _) = IsInInvetory(_ItemName);
 
 		// Check if item already exists in the inventory
@@ -188,12 +188,17 @@ public partial class InventoryHandler : Inventory {
 			// Adds to the inventory
 			void Add(int __SlotNumber, int __CollumIndex) {
 				INVENTORY[__CollumIndex][__SlotNumber] = _ItemName;
-				InvAnalytics.WriteBufferData(_ItemName,InvAnalytics.PLAYER_DATA[_ItemName],1); // wirte to set history
-				DrawInventory();
+				if(_FuckWithHistory) {
+					InvAnalytics.WriteBufferData(_ItemName,InvAnalytics.PLAYER_DATA[_ItemName],1); // wirte to set history
+				}
 			}
 			
 			// Pushes The History of other items
 			void Push() {
+				if(!_FuckWithHistory) {
+					return;
+				}
+				
 				foreach((int Index, Dictionary<int,string> Collum) in INVENTORY) {
 					foreach((int CollumIndex, string ItemName) in Collum) {
 						if(ItemName != _ItemName) {
@@ -220,8 +225,9 @@ public partial class InventoryHandler : Inventory {
 					}
 				}
 			} else { //  Create a new row
+			GD.Print(INVENTORY.Count);
 				INVENTORY.Add(INVENTORY.Count,new Dictionary<int, string>{});
-				Add(0,INVENTORY.Count);
+				Add(0,INVENTORY.Count - 1); // we do -1 cuz the line above we add one
 			}
 
 			Push();
@@ -239,6 +245,8 @@ public partial class InventoryHandler : Inventory {
 				if(ItemName == _ItemName) {
 					return (true,Index,CollumIndex);
 				}
+			} {
+
 			}
 		}
 		return (false,null,null);

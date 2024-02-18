@@ -6,6 +6,13 @@ using Godot;
 
 // Does Main high Level Data Requests
 public class DataRepository : DataHandler {
+	/*
+		 so for storing object specific meta tags
+
+		 just add the tag under here along with th shortcut it needs to represent
+		 and all your stuff is sorted
+	*/
+
 	// easy encrypytion method for storing tags with shortcuts
 	public static Dictionary<string,string> ENCRYPTION_LIBRARY = new Dictionary<string, string>{
 		["Position"] = "P",
@@ -16,13 +23,13 @@ public class DataRepository : DataHandler {
 
 	// Inv Encryptions junk
     public static Dictionary<int,string> INVENTORY_ENCRYPTION_KEY = new Dictionary<int, string>{
-        [1] = "Wheat", [2] = "Stone", [3] = "Wood"
+        [1] = "Wheat", [2] = "Stone", [3] = "Wood",
     };
 
 
     // unused
     public static void Settings() {
-        DataController.GenerateJsonFile(2); // Setting file
+        DataController.GenerateJsonFile(2); // Setting file, ID 2 means itll generate a settings file
     }
 
     // basic Controls and components

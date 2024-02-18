@@ -88,6 +88,7 @@ public partial class InvAnalytics : DataRepository {
 			"A",
             DataHandler.DATA_FILE
         );
+        Godot.Collections.Dictionary<string,int> OverrideHistory = new Godot.Collections.Dictionary<string, int>(ImportedItemHistory); // clone it cuz it was doing some black magic, and i dont like that
 
         // We Port that shit over
         foreach((string TypeName, Variant IntValue) in InmportedJsonData) {
@@ -105,14 +106,16 @@ public partial class InvAnalytics : DataRepository {
 
         // Check if item still exists
         // otherwise delete data
-        foreach((string TypeName, Variant _) in ImportedItemHistory) {
+        foreach((string TypeName, Variant _) in OverrideHistory) {
             string DecryptedData = DecryptDataEntry(TypeName);
-            
+
             if(DecryptedData == "") {
                 GD.PushWarning("Solving lost memory");
                 // Ik its not the most safe thing
                 // if shit hits the fan, look here
-                ((Godot.Collections.Dictionary<string,int>)DataHandler.DATA_FILE["A"]).Remove(TypeName);
+                if(((Godot.Collections.Dictionary<string,int>)DataHandler.DATA_FILE["A"]).ContainsKey(TypeName)) {
+                    ((Godot.Collections.Dictionary<string,int>)DataHandler.DATA_FILE["A"]).Remove(TypeName);
+                }
             }
         }
     }
