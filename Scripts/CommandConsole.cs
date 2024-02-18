@@ -16,15 +16,13 @@ public partial class CommandConsole : Node
 	// First nest in command
 	public static Dictionary<string,Variant> COMMAND_STACK = new Dictionary<string, Variant>{
 		["Stack1"] = new Godot.Collections.Dictionary<string,string>{
-			["Game"] = null,
 			["Grid"] = null,
 			["Placement"] = null,
 			["Inventory"] = null,
 			["Data"] = null,
 		},
 		["Stack2"] = new Godot.Collections.Dictionary<string,string>{
-			["LoadArchive"] = "Game", // loads file
-
+			["LoadArchive"] = "Data", // loads file
 			["SaveArchive"] = "Data", // saves file
 			
 			["InventoryArchive"] = "Inventory", // prints the entire inventory;
@@ -47,7 +45,6 @@ public partial class CommandConsole : Node
 	public static TextEdit CONSOLE;
 	public static TextEdit LSP_CONSOLE;
 	public static Node3D NODE_WORKSPACE;
-	public delegate void CaptureFocus();
 
 	// startup
     public override void _Ready() {
@@ -178,7 +175,7 @@ public partial class CommandExecuter : CommandConsole {
 			if(!GAME_ENABLED) {return;}
 			VoxelGrid.VisualizeAffectedVoxelGrid(false);
 			VoxelGrid.VisualizeNormalGrid(false);
-			VoxelGrid.VisualizeVoxelGrid((bool)_Parameters[0]);
+			VoxelGrid.VisualizeVoxelGrid((bool) _Parameters[0]);
 		} else if(_Command == "ShowVoxelState") {
 			if(!GAME_ENABLED) {return;}
 			VoxelGrid.VisualizeVoxelGrid(false);
@@ -201,7 +198,7 @@ public partial class CommandExecuter : CommandConsole {
 			if(!GAME_ENABLED) {return;}
 
 			int Amount = (int)Convert.ToInt32(_Parameters[1]);
-			InventoryData.AddItemToDataBase((string)_Parameters[0],Amount);
+			InventoryData.AddItemToDataBase((string)_Parameters[0],Amount,null);
 			GD.Print("Added " + Amount + " Of " + (string)_Parameters[0] + " To your inventory");
 		}
 	}

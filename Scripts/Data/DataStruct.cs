@@ -1,4 +1,3 @@
-
 using System;
 using Godot;
 
@@ -40,6 +39,8 @@ public struct DataStruct {
             ["2"] = 0, // Stone
             ["3"] = 0, // Wood
         },
+
+        // We keep item age as and empty cuz im to lazy to write mutiple inventories, cuz it WILL get messy
         ["A"] = new Godot.Collections.Dictionary<string,int> {}, // inventory history
     };
 

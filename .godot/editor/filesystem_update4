@@ -9,8 +9,7 @@ res://Scripts/Core/MouseCursor.cs
 res://Scripts/debug/DebugNode.cs
 res://Scripts/debug/Fps.cs
 res://Scripts/DemolitionTool.cs
-res://Scripts/Inventory/inventory.cs
+res://Scripts/Inventory/Inventory.cs
 res://Scripts/Placing/GridHandler.cs
 res://Scripts/Placing/VoxelGridHandler.cs
 res://Scripts/PlotBorder.cs
-res://Scripts/Inventory/Inventory.cs

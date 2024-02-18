@@ -6,7 +6,7 @@ using Godot;
 public partial class InvAnalytics : DataRepository {
     // Public shit
     public static Dictionary<string,int> PLAYER_DATA = new Dictionary<string, int>();
-    public static Dictionary<string,int> PLAYER_HISTORY_DATA = new Dictionary<string, int>();
+    public static Dictionary<string,int> PLAYER_HISTORY_DATA = new Dictionary<string, int>(); // just for me, 0 means none so DONT assign items a 0 history value when it has more then 0 amount
 
     /// Decyrpt a number into data type
     // do i love data ............... :]
@@ -18,7 +18,7 @@ public partial class InvAnalytics : DataRepository {
 
         // Checks if it is
         if(!INVENTORY_ENCRYPTION_KEY.ContainsKey(FormatedInteger)) {
-            GD.PushError("Decryption Error: Inventory Data Type " + _DataEntry + " Doesn't exist");
+            GD.PushWarning("Decryption Error: Inventory Data Type " + _DataEntry + " Doesn't exist");
             return "";
         } else {
             return INVENTORY_ENCRYPTION_KEY[FormatedInteger];
@@ -98,7 +98,21 @@ public partial class InvAnalytics : DataRepository {
             if(ImportedItemHistory.ContainsKey(TypeName)) {
                 PLAYER_HISTORY_DATA.Add(DecryptedData,ImportedItemHistory[TypeName]);
             } else {
-                PLAYER_HISTORY_DATA.Add(DecryptedData,0);
+                PLAYER_HISTORY_DATA.Add(DecryptedData,0); // 0 is nothing, simple ass that
+                // So for the love of god DO not fucking assign a item history value of zero
+            }
+        }
+
+        // Check if item still exists
+        // otherwise delete data
+        foreach((string TypeName, Variant _) in ImportedItemHistory) {
+            string DecryptedData = DecryptDataEntry(TypeName);
+            
+            if(DecryptedData == "") {
+                GD.PushWarning("Solving lost memory");
+                // Ik its not the most safe thing
+                // if shit hits the fan, look here
+                ((Godot.Collections.Dictionary<string,int>)DataHandler.DATA_FILE["A"]).Remove(TypeName);
             }
         }
     }

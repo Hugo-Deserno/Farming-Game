@@ -83,6 +83,8 @@ public class MouseRect {
 
         // first check
         // Only doing half of it because its more preformant
+        // Ik i just needed it a excuse cuz it looked bad for it to be just 1 if statement
+        // yay me with bad practises
         if(_Position.X < B_L 
         || _Position.Y < B_T) {
             State = false;
