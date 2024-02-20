@@ -193,7 +193,7 @@ public partial class CommandExecuter : CommandConsole {
 			GridHandler.PLACING_SYSTEM.Enable();
 		} else if(_Command == "InventoryArchive") {
 			if(!GAME_ENABLED) {return;}
-			InventoryData.DebugInventory();
+			InventoryData.DebugInventory(Inventory.INVENTORY);
 		} else if(_Command == "Add") {
 			if(!GAME_ENABLED) {return;}
 

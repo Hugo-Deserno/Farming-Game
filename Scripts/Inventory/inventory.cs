@@ -121,8 +121,8 @@ public partial class InventoryData : Inventory {
 
 	// Prints the inventory for debugging case
 	// mainly cuz godots response is weird and unclear
-	public static void DebugInventory() {
-		foreach((int _, Dictionary<int,string> Collum) in INVENTORY) {
+	public static void DebugInventory(Dictionary<int,Dictionary<int,string>> InventoryInstance) {
+		foreach((int _, Dictionary<int,string> Collum) in InventoryInstance) {
 			string CompiledString = "";
 
 			foreach((int Index, string ItemName) in Collum) {
@@ -164,7 +164,10 @@ public partial class InventoryHandler : Inventory {
 				return;
 			}
 
+			// determins if we have to do wierd shit with our content
+			bool IndexFill = INVENTORY[(int)CollumEntry].Count == INDEX_PER_COLLUM ? true : false;
 			// Does the removing itself
+			GD.Print((int)CollumEntry);
 			INVENTORY[(int)CollumEntry].Remove((int)RowEntry);
 
 			// moves all the rows one lower
@@ -172,6 +175,61 @@ public partial class InventoryHandler : Inventory {
 			// when a entry gets removed there will be a empty space at the end of the row
 			// so we need to pick the next collum and move the first entry to that collum
 			// so on and so on
+
+			// OORRRRR
+
+			// we construct a entire new inventory
+			// with a weird janky ass algorithm
+			// yeaaa we do that
+			if(IndexFill) {
+				Dictionary<int,Dictionary<int,string>> InventoryClone = new Dictionary<int, Dictionary<int, string>>();
+				int CurrentCollum = 0;
+				int CurrentRow = 0;
+
+				// SO what happens here exactly?
+
+				/*
+					basically create a inv clone
+					then loop through every entry in the original inventory
+					then fill in the clone with every entry of the old one
+				*/
+				
+				for(int IndexRowIncrement = 0; IndexRowIncrement < INVENTORY.Count - 1; IndexRowIncrement++) {
+					for(int IndexCollumIncrement = 0; IndexCollumIncrement < INVENTORY[IndexRowIncrement].Count - 1; IndexCollumIncrement++) {
+						if(InventoryClone.ContainsKey(CurrentRow)) {
+							InventoryClone.Add(CurrentRow, new Dictionary<int, string>());
+						}
+
+						InventoryClone[CurrentRow].Add(CurrentCollum,INVENTORY[IndexRowIncrement][IndexCollumIncrement]);
+						CurrentCollum++;
+
+						if(CurrentCollum > INDEX_PER_COLLUM - 1) {
+							CurrentRow++;
+							CurrentCollum = 0;
+						}
+					}
+				}
+
+				InventoryData.DebugInventory(InventoryClone);
+				/*
+				bool IndexSwitch = false; // determins if it has to make contact with last row
+
+				// Start at the splitting point of the dict
+				for(int IndexIncrement = (int)CollumEntry + 1; IndexIncrement < INVENTORY.Count; IndexIncrement++) {
+					for(int CollumIndex = 0; CollumIndex < INDEX_PER_COLLUM; CollumIndex++) {
+						if(CollumIndex == 0) {
+							IndexSwitch = true;
+						}
+
+						if(IndexSwitch) { // moves it to the last layer
+							INVENTORY[IndexIncrement].Add(INVENTORY.Count - 1,InventoryClone[IndexIncrement - 1][0]); // applies to the last row
+							IndexSwitch = false;
+						} else {
+							INVENTORY[IndexIncrement].Add(CollumIndex,InventoryClone[IndexIncrement][CollumIndex + 1]);
+						}
+					}
+				}*/
+			}
 			
 			// move the history one down
 
