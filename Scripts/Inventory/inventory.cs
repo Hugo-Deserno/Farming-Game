@@ -122,6 +122,7 @@ public partial class InventoryData : Inventory {
 	// Prints the inventory for debugging case
 	// mainly cuz godots response is weird and unclear
 	public static void DebugInventory(Dictionary<int,Dictionary<int,string>> InventoryInstance) {
+		GD.Print(InventoryInstance);
 		foreach((int _, Dictionary<int,string> Collum) in InventoryInstance) {
 			string CompiledString = "";
 
@@ -167,7 +168,6 @@ public partial class InventoryHandler : Inventory {
 			// determins if we have to do wierd shit with our content
 			bool IndexFill = INVENTORY[(int)CollumEntry].Count == INDEX_PER_COLLUM ? true : false;
 			// Does the removing itself
-			GD.Print((int)CollumEntry);
 			INVENTORY[(int)CollumEntry].Remove((int)RowEntry);
 
 			// moves all the rows one lower
@@ -194,23 +194,28 @@ public partial class InventoryHandler : Inventory {
 					then fill in the clone with every entry of the old one
 				*/
 				
-				for(int IndexRowIncrement = 0; IndexRowIncrement < INVENTORY.Count - 1; IndexRowIncrement++) {
-					for(int IndexCollumIncrement = 0; IndexCollumIncrement < INVENTORY[IndexRowIncrement].Count - 1; IndexCollumIncrement++) {
-						if(InventoryClone.ContainsKey(CurrentRow)) {
+				for(int IndexRowIncrement = 0; IndexRowIncrement < INVENTORY.Count; IndexRowIncrement++) {
+					for(int IndexCollumIncrement = 0; IndexCollumIncrement < INDEX_PER_COLLUM; IndexCollumIncrement++) {
+						if(!InventoryClone.ContainsKey(CurrentRow)) {
 							InventoryClone.Add(CurrentRow, new Dictionary<int, string>());
 						}
 
-						InventoryClone[CurrentRow].Add(CurrentCollum,INVENTORY[IndexRowIncrement][IndexCollumIncrement]);
-						CurrentCollum++;
+						if(INVENTORY[IndexRowIncrement].ContainsKey(IndexCollumIncrement)) {
+							InventoryClone[CurrentRow].Add(CurrentCollum,INVENTORY[IndexRowIncrement][IndexCollumIncrement]);
+							CurrentCollum++;
 
-						if(CurrentCollum > INDEX_PER_COLLUM - 1) {
-							CurrentRow++;
-							CurrentCollum = 0;
+							if(CurrentCollum > INDEX_PER_COLLUM - 1) {
+								CurrentRow++;
+								CurrentCollum = 0;
+							}
 						}
 					}
 				}
 
-				InventoryData.DebugInventory(InventoryClone);
+				//GODAMMIT, FIX THE FUCKING SORTING ORDER
+
+				// overwrite that shit
+				INVENTORY = InventoryClone;
 				/*
 				bool IndexSwitch = false; // determins if it has to make contact with last row
 
