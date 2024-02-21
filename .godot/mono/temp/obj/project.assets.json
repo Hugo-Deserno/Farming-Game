@@ -88,19 +88,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Eigenaar\\.nuget\\packages\\": {}
+    "C:\\Users\\hugod\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Eigenaar\\OneDrive\\Documents\\Projects_Godot\\Farming-Game\\Projects Godot.csproj",
+      "projectUniqueName": "C:\\Users\\hugod\\OneDrive\\Documents\\Projects_Godot\\Farming-Game\\Projects Godot.csproj",
       "projectName": "Projects Godot",
-      "projectPath": "C:\\Users\\Eigenaar\\OneDrive\\Documents\\Projects_Godot\\Farming-Game\\Projects Godot.csproj",
-      "packagesPath": "C:\\Users\\Eigenaar\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Eigenaar\\OneDrive\\Documents\\Projects_Godot\\Farming-Game\\.godot\\mono\\temp\\obj\\",
+      "projectPath": "C:\\Users\\hugod\\OneDrive\\Documents\\Projects_Godot\\Farming-Game\\Projects Godot.csproj",
+      "packagesPath": "C:\\Users\\hugod\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\hugod\\OneDrive\\Documents\\Projects_Godot\\Farming-Game\\.godot\\mono\\temp\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Eigenaar\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\hugod\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net6.0"

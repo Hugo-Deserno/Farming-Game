@@ -7,7 +7,7 @@
 [ext_resource type="Script" path="res://Scripts/Placing/VoxelGridHandler.cs" id="5_bimc3"]
 [ext_resource type="Script" path="res://Scripts/PlotBorder.cs" id="6_k5v5h"]
 [ext_resource type="Script" path="res://Scripts/debug/Fps.cs" id="7_4hpjl"]
-[ext_resource type="PackedScene" uid="uid://d16j5v73uslbu" path="res://packages/inventory.tscn" id="8_fqyuq"]
+[ext_resource type="PackedScene" uid="uid://d16j5v73uslbu" path="res://packages/Inventory.tscn" id="8_fqyuq"]
 [ext_resource type="Script" path="res://Scripts/Inventory/Inventory.cs" id="9_2enwx"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7i53h"]
