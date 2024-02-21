@@ -1,8 +1,7 @@
-res://packages/Game.tscn
 res://packages/Main.tscn
+res://packages/Game.tscn
 res://packages/Placeable/Lantern.tscn
 res://packages/Character.tscn
-res://packages/Inventory.tscn
 res://Scripts/CommandConsole.cs
 res://Scripts/Core/CharacterController.cs
 res://Scripts/Core/MouseCursor.cs
@@ -13,3 +12,4 @@ res://Scripts/Inventory/Inventory.cs
 res://Scripts/Placing/GridHandler.cs
 res://Scripts/Placing/VoxelGridHandler.cs
 res://Scripts/PlotBorder.cs
+res://packages/Inventory.tscn

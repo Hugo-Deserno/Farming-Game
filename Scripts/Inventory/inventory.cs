@@ -10,6 +10,7 @@ public partial class Inventory : Control
 	public static int INDEX_PER_COLLUM = 7;
 	// General Data
 	public static bool IS_ON_MAIN_UI_ELEMENT = false;
+	public static int SORTING_TYPE = 1; // 1: default, 2: Inverse default, 3: Name
 	// Objects
 	public static Panel NODE_BACKGROUND;
 	public static MouseRect MOUSE_RECT;
@@ -122,7 +123,6 @@ public partial class InventoryData : Inventory {
 	// Prints the inventory for debugging case
 	// mainly cuz godots response is weird and unclear
 	public static void DebugInventory(Dictionary<int,Dictionary<int,string>> InventoryInstance) {
-		GD.Print(InventoryInstance);
 		foreach((int _, Dictionary<int,string> Collum) in InventoryInstance) {
 			string CompiledString = "";
 
@@ -132,12 +132,28 @@ public partial class InventoryData : Inventory {
 			GD.Print(CompiledString);
 		}
 	}
+
+	// Debugs the history
+	// so my dumb brain doesnt have to search through the json
+	public static void DebugHistory() {
+		foreach((int _, Dictionary<int,string> Collum) in INVENTORY) {
+			string CompiledString = "";
+
+			foreach((int _, string ItemName) in Collum) {
+				CompiledString += "[{" + ItemName + "} : " + InvAnalytics.PLAYER_HISTORY_DATA[ItemName] + "]  ";
+			}
+			GD.Print(CompiledString);
+		}
+	}
 }
 
 public partial class InventoryHandler : Inventory {
 	// Sorts all the garabage
 	public static void DrawInventory() {
+		// Dont fuck with history
+		// method is meant to sort inventory based on history OR Alphabetical order
 
+		
 	}
 
 	// Removes shit that aint wnated
@@ -167,6 +183,8 @@ public partial class InventoryHandler : Inventory {
 
 			// determins if we have to do wierd shit with our content
 			bool IndexFill = INVENTORY[(int)CollumEntry].Count == INDEX_PER_COLLUM ? true : false;
+			int SortIndex = InvAnalytics.PLAYER_HISTORY_DATA[_ItemName];
+
 			// Does the removing itself
 			INVENTORY[(int)CollumEntry].Remove((int)RowEntry);
 
@@ -211,9 +229,6 @@ public partial class InventoryHandler : Inventory {
 						}
 					}
 				}
-
-				//GODAMMIT, FIX THE FUCKING SORTING ORDER
-
 				// overwrite that shit
 				INVENTORY = InventoryClone;
 				/*
@@ -235,10 +250,14 @@ public partial class InventoryHandler : Inventory {
 					}
 				}*/
 			}
-			
-			// move the history one down
 
-			// Remove empty collums aka when there is no entry in a row
+			//GODAMMIT, FIX THE FUCKING SORTING ORDER
+			// thank you -future quas
+			foreach((string ItemName, int HistoryIndex) in InvAnalytics.PLAYER_HISTORY_DATA) {
+				if(HistoryIndex > SortIndex) {
+					InvAnalytics.PLAYER_HISTORY_DATA[ItemName]--;
+				}
+			}
 		}
 	}
 
@@ -288,7 +307,6 @@ public partial class InventoryHandler : Inventory {
 					}
 				}
 			} else { //  Create a new row
-			GD.Print(INVENTORY.Count);
 				INVENTORY.Add(INVENTORY.Count,new Dictionary<int, string>{});
 				Add(0,INVENTORY.Count - 1); // we do -1 cuz the line above we add one
 			}

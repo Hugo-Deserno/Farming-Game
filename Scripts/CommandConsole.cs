@@ -26,6 +26,7 @@ public partial class CommandConsole : Node
 			["SaveArchive"] = "Data", // saves file
 			
 			["InventoryArchive"] = "Inventory", // prints the entire inventory;
+			["DisplayHistory"] = "Inventory", // Adds a item to the inventory
 			["Add"] = "Inventory", // Adds a item to the inventory
 
 			["ShowVoxels"] = "Grid", // shows voxel grid
@@ -188,7 +189,6 @@ public partial class CommandExecuter : CommandConsole {
 			VoxelGrid.VisualizeNormalGrid((bool)_Parameters[0]);
 		} else if(_Command == "StartPlacing") {
 			if(!GAME_ENABLED) {return;}
-
 			GridHandler.PLACING_SYSTEM = new GridSystem3D((string)_Parameters[0]);
 			GridHandler.PLACING_SYSTEM.Enable();
 		} else if(_Command == "InventoryArchive") {
@@ -196,10 +196,12 @@ public partial class CommandExecuter : CommandConsole {
 			InventoryData.DebugInventory(Inventory.INVENTORY);
 		} else if(_Command == "Add") {
 			if(!GAME_ENABLED) {return;}
-
 			int Amount = (int)Convert.ToInt32(_Parameters[1]);
 			InventoryData.AddItemToDataBase((string)_Parameters[0],Amount,null,true);
 			GD.Print("Added " + Amount + " Of " + (string)_Parameters[0] + " To your inventory");
+		} else if(_Command == "DisplayHistory") {
+			if(!GAME_ENABLED) {return;}
+			InventoryData.DebugHistory();
 		}
 	}
 }
@@ -333,44 +335,49 @@ public partial class CommandLSP : CommandConsole {
 
 		// JK, i did it anyways
 		if(CurrentLockOnAnswer != null) {
-			//LSP_CONSOLE.Text = MergeLockOn();
+			try {
+				//LSP_CONSOLE.Text = MergeLockOn();
 
-			char[] CommandIndents = new char[]{':','('};
-			string[] CommandChunks = CONSOLE.Text.ToString().Split(CommandIndents);
+				char[] CommandIndents = new char[]{':','('};
+				string[] CommandChunks = CONSOLE.Text.ToString().Split(CommandIndents);
 
-			if(CommandChunks.Length == 0 || CurrentLockOnAnswer == "" || CONSOLE.Text.Length > 0 && CONSOLE.Text[CONSOLE.Text.Length - 1] == ')') {
-				return;
-			}
+				if(CommandChunks.Length == 0 || CurrentLockOnAnswer == "" || CONSOLE.Text.Length > 0 && CONSOLE.Text[CONSOLE.Text.Length - 1] == ')') {
+					return;
+				}
 
-			// Creates a new string from the command which is used to trim of the stack lock on
-			string RecentCommand = CommandChunks[CommandChunks.Length - 1];
-			string ReformedCommand = "";
+				// Creates a new string from the command which is used to trim of the stack lock on
+				string RecentCommand = CommandChunks[CommandChunks.Length - 1];
+				string ReformedCommand = "";
 
-			// welds the stuff togheter
-			for(int CaretPosition = 0; CaretPosition < RecentCommand.Length; CaretPosition++) {
-				ReformedCommand += RecentCommand[CaretPosition];
-			}
+				// welds the stuff togheter
+				for(int CaretPosition = 0; CaretPosition < RecentCommand.Length; CaretPosition++) {
+					ReformedCommand += RecentCommand[CaretPosition];
+				}
 
-			// Formats the capitialization correctly so that trimming can read its
-			string FinalizedCommand = "";
-			for(int Increment = 0; Increment < ReformedCommand.Length; Increment++) {
-				FinalizedCommand += CurrentLockOnAnswer[Increment];
-			}
+				// Formats the capitialization correctly so that trimming can read its
+				string FinalizedCommand = "";
+				for(int Increment = 0; Increment < ReformedCommand.Length; Increment++) {
+					FinalizedCommand += CurrentLockOnAnswer[Increment];
+				}
 
-			// remove the existing part of the command from the lockon
-			string StackString = CurrentLockOnAnswer.TrimPrefix(FinalizedCommand);
+				// remove the existing part of the command from the lockon
+				string StackString = CurrentLockOnAnswer.TrimPrefix(FinalizedCommand);
 
-			/*
-			char[] SliceChars = new char[]{CutoffChar};
+				/*
+				char[] SliceChars = new char[]{CutoffChar};
 
-			// Get both slices
-			string[] SlicedCommandLockOn = CurrentLockOnAnswer.ToString().Split(SliceChars);
-			string[] SlicedCommand = RecentCommand.ToString().Split(SliceChars);*/
+				// Get both slices
+				string[] SlicedCommandLockOn = CurrentLockOnAnswer.ToString().Split(SliceChars);
+				string[] SlicedCommand = RecentCommand.ToString().Split(SliceChars);*/
 
-			// merge That Shit			
-			LSP_CONSOLE.Text = MergeCommands(CommandChunks) + ReformedCommand + StackString;
-			if(IsAtEnOfStack(CurrentLockOnAnswer)) {
-				LSP_CONSOLE.Text += "()";
+				// merge That Shit			
+				LSP_CONSOLE.Text = MergeCommands(CommandChunks) + ReformedCommand + StackString;
+				if(IsAtEnOfStack(CurrentLockOnAnswer)) {
+					LSP_CONSOLE.Text += "()";
+				}
+			} catch {
+				// Fuck errors
+				// #I dont give a shit
 			}
 		}
 	}
