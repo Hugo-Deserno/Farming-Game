@@ -123,6 +123,16 @@ public partial class InventoryData : Inventory {
 	// Prints the inventory for debugging case
 	// mainly cuz godots response is weird and unclear
 	public static void DebugInventory(Dictionary<int,Dictionary<int,string>> InventoryInstance) {
+		for(int CollumIncrement = 0; CollumIncrement < InventoryInstance.Count; CollumIncrement++) {
+			string CompiledString = "";
+
+			for(int RowIncrement = 0; RowIncrement < InventoryInstance[CollumIncrement].Count; RowIncrement++) {
+				CompiledString += "[{" + RowIncrement + "} : " + InventoryInstance[CollumIncrement][RowIncrement] + "]  ";
+			}
+			GD.Print(CompiledString);
+		}
+
+		/*
 		foreach((int _, Dictionary<int,string> Collum) in InventoryInstance) {
 			string CompiledString = "";
 
@@ -130,12 +140,22 @@ public partial class InventoryData : Inventory {
 				CompiledString += "[{" + Index + "} : " + ItemName + "]  ";
 			}
 			GD.Print(CompiledString);
-		}
+		}*/
 	}
 
 	// Debugs the history
 	// so my dumb brain doesnt have to search through the json
 	public static void DebugHistory() {
+		for(int CollumIncrement = 0; CollumIncrement < INVENTORY.Count; CollumIncrement++) {
+			string CompiledString = "";
+
+			for(int RowIncrement = 0; RowIncrement < INVENTORY[CollumIncrement].Count; RowIncrement++) {
+				CompiledString += "[{" + INVENTORY[CollumIncrement][RowIncrement] + "} : " + InvAnalytics.PLAYER_HISTORY_DATA[INVENTORY[CollumIncrement][RowIncrement]] + "]  ";
+			}
+			GD.Print(CompiledString);
+		}
+
+		/*
 		foreach((int _, Dictionary<int,string> Collum) in INVENTORY) {
 			string CompiledString = "";
 
@@ -143,7 +163,7 @@ public partial class InventoryData : Inventory {
 				CompiledString += "[{" + ItemName + "} : " + InvAnalytics.PLAYER_HISTORY_DATA[ItemName] + "]  ";
 			}
 			GD.Print(CompiledString);
-		}
+		}*/
 	}
 }
 
@@ -152,8 +172,49 @@ public partial class InventoryHandler : Inventory {
 	public static void DrawInventory() {
 		// Dont fuck with history
 		// method is meant to sort inventory based on history OR Alphabetical order
+		Dictionary<int,Dictionary<int,string>> InventoryClone = new Dictionary<int, Dictionary<int, string>>();
 
-		
+		int CurrentIndex = SORTING_TYPE == 2 ? InvAnalytics.PLAYER_HISTORY_DATA.Count : 1;
+
+		int CurrentRowIndex = 0;
+		int CurrentCollumIndex = 0;
+
+		// Holy shit this a mouth full
+
+		// Basically get all the entries history
+		for(int IndexIncrement = 0; IndexIncrement < InvAnalytics.PLAYER_HISTORY_DATA.Count; IndexIncrement++) {
+			// Loop though all the entries in the inventory
+			foreach((int CollumIndex, Dictionary<int,string> CollumEntry) in INVENTORY) {
+				foreach((int RowIndex, string ItemName) in CollumEntry) {
+
+					// do some weird shit if it matches
+					if(InvAnalytics.PLAYER_HISTORY_DATA[ItemName] == CurrentIndex) {
+						if(!InventoryClone.ContainsKey(CurrentCollumIndex)) {
+							InventoryClone.Add(CurrentRowIndex, new Dictionary<int, string>());
+						}
+
+						InventoryClone[CurrentCollumIndex].Add(RowIndex,ItemName);
+						CurrentRowIndex++;
+
+						if(CurrentRowIndex > INDEX_PER_COLLUM) {
+							CurrentRowIndex = 0;
+							CurrentRowIndex++;
+						}
+						
+						if(SORTING_TYPE == 2) {
+							CurrentIndex--;
+						} else {
+							CurrentIndex++;
+						}
+					}
+				}
+			}
+		}
+
+		if(InventoryClone.Count == 0) {
+			return;
+		}
+		INVENTORY = new Dictionary<int, Dictionary<int, string>>(InventoryClone);
 	}
 
 	// Removes shit that aint wnated
@@ -258,6 +319,7 @@ public partial class InventoryHandler : Inventory {
 					InvAnalytics.PLAYER_HISTORY_DATA[ItemName]--;
 				}
 			}
+			DrawInventory();
 		}
 	}
 
@@ -314,6 +376,19 @@ public partial class InventoryHandler : Inventory {
 			Push();
 			DrawInventory();
 		} else {
+			// Move said item to the first entry of this shit
+			// this means that there will need to be a push till the gap is reached
+			int Breakpoint = InvAnalytics.PLAYER_HISTORY_DATA[_ItemName];
+
+			foreach((string ItemName, int HistoryIndex) in InvAnalytics.PLAYER_HISTORY_DATA) {
+				if(HistoryIndex < Breakpoint) {
+					InvAnalytics.PLAYER_HISTORY_DATA[ItemName]++;
+				}
+			}
+
+			InvAnalytics.PLAYER_HISTORY_DATA[_ItemName] = 1;
+			DrawInventory();
+
 			return;
 		}
 	}
