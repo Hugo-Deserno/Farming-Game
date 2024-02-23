@@ -2,6 +2,9 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
+// send help
+// what kind of crack did i smoke
+
 public partial class Inventory : Control
 {
 	// Config
@@ -13,6 +16,8 @@ public partial class Inventory : Control
 	public static int SORTING_TYPE = 1; // 1: default, 2: Inverse default, 3: Name
 	// Objects
 	public static Panel NODE_BACKGROUND;
+	public static Panel ITEM_TEMPLATE;
+	public static GridContainer ITEM_STORAGE;
 	public static MouseRect MOUSE_RECT;
 
 	/*
@@ -48,10 +53,14 @@ public partial class Inventory : Control
 			InventoryHandler.DrawInventory();
 		}
 
+		// Gets nodes first otherwise shit cannot be found
+		NODE_BACKGROUND = GetNode<Panel>("Background");
+		ITEM_TEMPLATE = GetNode<Panel>("Contents/Template/Template");
+		ITEM_STORAGE = GetNode<GridContainer>("Contents");
+
         // Load That shit up
         InvAnalytics.BufferInventoryData();
 		DataBuffer(InvAnalytics.PLAYER_DATA);
-		NODE_BACKGROUND = GetNode<Panel>("Background");
 
 		// Set up mous rect
 		MOUSE_RECT = new MouseRect(NODE_BACKGROUND);
@@ -84,6 +93,11 @@ public partial class Inventory : Control
 		ModulaDelta = Math.Clamp(ModulaDelta,0,MAX_SCROLL);
 	}
 
+	// Sorts the visual inventory
+	public static void SortVisualInventory() {
+
+	}
+
 	// Updates A Certain Slot
 	public static void UpdateInventorySlot(string _slotName) {
 		if(!InvAnalytics.PLAYER_DATA.ContainsKey(_slotName)) {
@@ -91,9 +105,20 @@ public partial class Inventory : Control
 		} else {
 			// REmove slot if it doesnt exist
 			if(InvAnalytics.PLAYER_DATA[_slotName] == 0) {
+				Node SelectedItem = ITEM_STORAGE.FindChild(_slotName,true,false);
 
+				if(SelectedItem != null) {
+					SelectedItem.QueueFree();
+				}
 			} else {
+				// check if it already exists
+				if(ITEM_STORAGE.FindChild(_slotName,true,false) == null) {
+					Node TemplateDuplicate =  ITEM_TEMPLATE.Duplicate();
+					ITEM_STORAGE.AddChild(TemplateDuplicate);
 
+					TemplateDuplicate.Name = _slotName;
+					((Panel)TemplateDuplicate).Visible = true;
+				}
 			}
 		}
 	}
@@ -175,7 +200,6 @@ public partial class InventoryHandler : Inventory {
 		Dictionary<int,Dictionary<int,string>> InventoryClone = new Dictionary<int, Dictionary<int, string>>();
 
 		int CurrentIndex = SORTING_TYPE == 2 ? InvAnalytics.PLAYER_HISTORY_DATA.Count : 1;
-
 		int CurrentRowIndex = 0;
 		int CurrentCollumIndex = 0;
 
@@ -193,7 +217,7 @@ public partial class InventoryHandler : Inventory {
 							InventoryClone.Add(CurrentRowIndex, new Dictionary<int, string>());
 						}
 
-						InventoryClone[CurrentCollumIndex].Add(RowIndex,ItemName);
+						InventoryClone[CurrentCollumIndex].Add(CurrentRowIndex,ItemName);
 						CurrentRowIndex++;
 
 						if(CurrentRowIndex > INDEX_PER_COLLUM) {
@@ -215,6 +239,7 @@ public partial class InventoryHandler : Inventory {
 			return;
 		}
 		INVENTORY = new Dictionary<int, Dictionary<int, string>>(InventoryClone);
+		Inventory.SortVisualInventory();
 	}
 
 	// Removes shit that aint wnated

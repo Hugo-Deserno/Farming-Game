@@ -38,6 +38,7 @@ public struct DataStruct {
             ["1"] = 0, // Wheat
             ["2"] = 0, // Stone
             ["3"] = 0, // Wood
+            ["4"] = 0, // epic
         },
 
         // We keep item age as and empty cuz im to lazy to write mutiple inventories, cuz it WILL get messy

@@ -1,5 +1,5 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1708596763
+::res://::1708679923
 icon.svg::CompressedTexture2D::8964987868957445313::1708177920::1708596763::1::::<><>::
 ::res://Assets/::1708596764
 FenceMiddle.obj::Mesh::2289636347587734477::1708177920::1708596763::1::::<><>::
@@ -10,8 +10,9 @@ Lantern.obj::Mesh::7586162225465763914::1708177920::1708596764::1::::<><>::
 Lantern.png::CompressedTexture2D::8812118390601858602::1708177920::1708177920::1::::<><>::
 ::res://Database/::1708177920
 Settings.json::JSON::-1::1708177920::0::1::::<><>::
-::res://Database/Archives/::1708596745
-1_Data_Archive.json::JSON::-1::1708596745::0::1::::<><>::
+::res://Database/Archives/::1708602180
+1_Data_Archive.json::JSON::-1::1708602194::0::1::::<><>::
+2_Data_Archive.json::JSON::-1::1708602180::0::1::::<><>::
 ::res://Images/::1708177920
 a-to-z-icon-10.png::CompressedTexture2D::1742640570750695170::1708177920::1708177920::1::::<><>::
 Grid_Cell.png::CompressedTexture2D::937174874370843539::1708177920::1708177920::1::::<><>::
@@ -23,15 +24,15 @@ icon 12.png::CompressedTexture2D::5490738389650462758::1708177920::1708177920::1
 Mouse_Cursor.png::CompressedTexture2D::7061716510815508873::1708177920::1708177920::1::::<><>::
 ::res://Images/Textures/::1708177920
 texture_01.png::CompressedTexture2D::2919692033212312029::1708177920::1708177920::1::::<><>::
-::res://packages/::1708596834
-Character.tscn::PackedScene::2934946301001334186::1708596834::0::1::::<><>::res://Scripts/Core/CharacterController.cs
+::res://packages/::1708602185
+Character.tscn::PackedScene::2934946301001334186::1708602185::0::1::::<><>::res://Scripts/Core/CharacterController.cs
 Fence_Middle.tscn::PackedScene::4119821043914928000::1708177920::0::1::::<><>::uid://gn53nrx72c0n::::res://Assets/FenceMiddle.png<>uid://7vd8gnuuhlsf::::res://Assets/FenceMiddle.obj
 Fence_Post.tscn::PackedScene::4062434134184341561::1708177920::0::1::::<><>::uid://mahhqlaq7mkt::::res://Assets/FencePost.png<>uid://dg7m88nllhpr::::res://Assets/FencePost.obj
-Game.tscn::PackedScene::7124741134350039810::1708596834::0::1::::<><>::uid://bh2yewd4k7lhq::::res://packages/Character.tscn<>res://Scripts/debug/DebugNode.cs<>res://Scripts/DemolitionTool.cs<>res://Scripts/Placing/GridHandler.cs<>res://Scripts/Placing/VoxelGridHandler.cs<>res://Scripts/PlotBorder.cs<>res://Scripts/debug/Fps.cs<>uid://d16j5v73uslbu::::res://packages/Inventory.tscn<>res://Scripts/Inventory/Inventory.cs
-Inventory.tscn::PackedScene::9048768876519776434::1708596834::0::1::::<><>::uid://d0yybmx512wov::::res://icon.svg<>uid://ckh0wn5d2jupa::::res://Images/icon 12.png
-Main.tscn::PackedScene::4505671795482212194::1708596833::0::1::::<><>::res://Scripts/CommandConsole.cs<>res://Scripts/Core/MouseCursor.cs<>uid://c7u0o6ypmnfg8::::res://Images/Mouse_Cursor.png
-::res://packages/Placeable/::1708596834
-Lantern.tscn::PackedScene::7855174606600657283::1708596834::0::1::::<><>::uid://dxswkjuts68fe::::res://Assets/Lantern.png<>uid://dgc18o6seisd3::::res://Assets/Lantern.obj
+Game.tscn::PackedScene::7124741134350039810::1708602185::0::1::::<><>::uid://bh2yewd4k7lhq::::res://packages/Character.tscn<>res://Scripts/debug/DebugNode.cs<>res://Scripts/DemolitionTool.cs<>res://Scripts/Placing/GridHandler.cs<>res://Scripts/Placing/VoxelGridHandler.cs<>res://Scripts/PlotBorder.cs<>res://Scripts/debug/Fps.cs<>uid://d16j5v73uslbu::::res://packages/Inventory.tscn<>res://Scripts/Inventory/Inventory.cs
+Inventory.tscn::PackedScene::9048768876519776434::1708602185::0::1::::<><>::uid://d0yybmx512wov::::res://icon.svg<>uid://ckh0wn5d2jupa::::res://Images/icon 12.png
+Main.tscn::PackedScene::4505671795482212194::1708602185::0::1::::<><>::res://Scripts/CommandConsole.cs<>res://Scripts/Core/MouseCursor.cs<>uid://c7u0o6ypmnfg8::::res://Images/Mouse_Cursor.png
+::res://packages/Placeable/::1708602185
+Lantern.tscn::PackedScene::7855174606600657283::1708602185::0::1::::<><>::uid://dxswkjuts68fe::::res://Assets/Lantern.png<>uid://dgc18o6seisd3::::res://Assets/Lantern.obj
 ::res://Resources/::1708177920
 Color_Pallete.png::CompressedTexture2D::6373588723523259256::1708177920::1708177920::1::::<><>::
 Mouse_Cursor_Hider.png::CompressedTexture2D::1546186759340681187::1708177920::1708177920::1::::<><>::
@@ -62,9 +63,9 @@ DefaultData.json::JSON::-1::1708177920::0::1::::<><>::
 ::res://Scripts/debug/::1708177920
 DebugNode.cs::CSharpScript::-1::1708177920::0::1::::<>Node<>::
 Fps.cs::CSharpScript::-1::1708177920::0::1::::<>RichTextLabel<>::
-::res://Scripts/Inventory/::1708596745
+::res://Scripts/Inventory/::1708596921
 InvAnalytics.cs::CSharpScript::-1::1708329872::0::1::::<><>::
-inventory.cs::CSharpScript::-1::1708596745::0::1::::<><>::
+Inventory.cs::CSharpScript::-1::1708602241::0::1::::<>Control<>::
 ::res://Scripts/Lib/::1708329872
 MouseRect.cs::CSharpScript::-1::1708329872::0::1::::<><>::
 Spring.cs::CSharpScript::-1::1708177920::0::1::::<><>::
