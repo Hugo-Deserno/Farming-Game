@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Godot;
 
@@ -23,7 +24,7 @@ public class DataRepository : DataHandler {
 
 	// Inv Encryptions junk
     public static Dictionary<int,string> INVENTORY_ENCRYPTION_KEY = new Dictionary<int, string>{
-        [1] = "Wheat", [2] = "Stone", [3] = "Wood", [4] = "Epic",
+        [1] = "Wheat", [2] = "Stone", [3] = "Wood",// [4] = "Epic",
     };
 
 
@@ -83,7 +84,9 @@ public class DataRepository : DataHandler {
     // Compiling and Saving
 
     // Saves All the Players Data To A Json File
-	public static void SaveDataToJson() {
+	// _ClassCaller is a special fucntion froma namespace which track which functions calls this method
+	public static void SaveDataToJson([CallerMemberName] string _ClassCaller = "") {
+		GD.Print("Data save request made from [" + _ClassCaller + "]");
         // placement ANd Voxels
 		DataHandler.Set(new System.Collections.Generic.Dictionary<int, string>{[0] = "P",},"V",CompileVoxelGrid(),DataHandler.DATA_FILE);
 		DataHandler.Set(new System.Collections.Generic.Dictionary<int, string>{[0] = "P",},"P",CompilePlacedItems(),DataHandler.DATA_FILE);

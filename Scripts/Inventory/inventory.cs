@@ -50,6 +50,7 @@ public partial class Inventory : Control
 					InventoryData.AddItemToDataBase(ItemName,Amount,null,false);
 				}
 			}
+
 			InventoryHandler.DrawInventory();
 		}
 
@@ -59,7 +60,11 @@ public partial class Inventory : Control
 		ITEM_STORAGE = GetNode<GridContainer>("Contents");
 
         // Load That shit up
+		// Laods the i9nvenytory and history
         InvAnalytics.BufferInventoryData();
+		//'fixes missing gaps in the history
+		InventoryHandler.PatchInventoryData();
+		// we load it all up
 		DataBuffer(InvAnalytics.PLAYER_DATA);
 
 		// Set up mous rect
@@ -417,7 +422,45 @@ public partial class InventoryHandler : Inventory {
 			return;
 		}
 	}
+	
+	// FIxxes gapos in the inventory
+	public static void PatchInventoryData() {
+		int CurrentHistoryIndex = 1;
+		bool FireSaveEvent = false;
+		
+		for(int HistoryIncerement = 0; HistoryIncerement < InvAnalytics.PLAYER_HISTORY_DATA.Count - 1; HistoryIncerement++) {
+			bool PatchCorrecting = true;
 
+			// Check if the history index exists
+			foreach ((string ItemName,int HistoryIndex) in InvAnalytics.PLAYER_HISTORY_DATA) {
+				if(HistoryIndex == CurrentHistoryIndex) {
+					PatchCorrecting = false;
+					FireSaveEvent = true;
+
+					CurrentHistoryIndex++;
+					break;
+				}
+			}
+
+			// if said item is missing, we do some funky shit
+			// bascially just throwing it out and shoving everything down
+			if(PatchCorrecting) {
+				GD.PushWarning("Fixing History Corruption");
+
+				foreach ((string ItemName,int HistoryIndex) in InvAnalytics.PLAYER_HISTORY_DATA) {
+					if(HistoryIndex > CurrentHistoryIndex) {
+						InvAnalytics.PLAYER_HISTORY_DATA[ItemName]--;
+					}
+				}
+			}
+		}
+
+		// Saves all of this shit
+		if(FireSaveEvent) {
+			DataRepository.SaveDataToJson();
+		}
+	}
+ 
 	// Checks if entry exists in inventory
 	public static (bool, int?, int?) IsInInvetory(string _ItemName) {
 		// Loop through the collums to check
