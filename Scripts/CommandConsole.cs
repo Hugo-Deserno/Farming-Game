@@ -197,7 +197,7 @@ public partial class CommandExecuter : CommandConsole {
 		} else if(_Command == "Add") {
 			if(!GAME_ENABLED) {return;}
 			int Amount = (int)Convert.ToInt32(_Parameters[1]);
-			InventoryData.AddItemToDataBase((string)_Parameters[0],Amount,null,true);
+			InventoryData.AddItemToDataBase((string)_Parameters[0],Amount,null,true,false);
 			GD.Print("Added " + Amount + " Of " + (string)_Parameters[0] + " To your inventory");
 		} else if(_Command == "DisplayHistory") {
 			if(!GAME_ENABLED) {return;}

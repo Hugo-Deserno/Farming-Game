@@ -37,8 +37,37 @@ public struct DataStruct {
             // inventory mats
             ["1"] = 0, // Wheat
             ["2"] = 0, // Stone
-            ["3"] = 0, // Wood
-            //["4"] = 0, // epic
+            ["3"] = 0, // Woods
+["4"] = 0, // epic
+["5"] = 0, // epic
+["6"] = 0, // epic
+["7"] = 0, // epic
+["8"] = 0, // epic
+["9"] = 0, // epic
+["10"] = 0, // epic
+["11"] = 0, // epic
+["12"] = 0, // epic
+["13"] = 0, // epic
+["14"] = 0, // epic
+["15"] = 0, // epic
+["16"] = 0, // epic
+["17"] = 0, // epic
+["18"] = 0, // epic
+["19"] = 0, // epic
+["20"] = 0, // epic
+["21"] = 0, // epic
+["22"] = 0, // epic
+["23"] = 0, // epic
+["24"] = 0, // epic
+["25"] = 0, // epic
+["26"] = 0, // epic
+["27"] = 0, // epic
+["28"] = 0, // epic
+["29"] = 0, // epic
+["30"] = 0, // epic
+["31"] = 0, // epic
+["32"] = 0, // epic
+["33"] = 0, // epic5
         },
 
         // We keep item age as and empty cuz im to lazy to write mutiple inventories, cuz it WILL get messy

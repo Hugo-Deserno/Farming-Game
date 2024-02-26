@@ -1,8 +1,8 @@
-res://packages/Game.tscn
 res://packages/Main.tscn
 res://packages/Placeable/Lantern.tscn
 res://packages/Character.tscn
 res://packages/Inventory.tscn
+res://packages/Game.tscn
 res://Scripts/CommandConsole.cs
 res://Scripts/Core/CharacterController.cs
 res://Scripts/Core/MouseCursor.cs

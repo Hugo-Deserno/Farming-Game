@@ -1,23 +1,38 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 // send help
 // what kind of crack did i smoke
 
+// Update, yep i definitely smoked something
+
+// anyways, LITTLE NOTE
+
+// if History DOES fuck up again
+// DO NOT, and i repeat , DO NOT glance over it
+// IDK what causes it, and i'm frankly to fucking lazy to search through this pile of spaghetti code for said problem
+
 public partial class Inventory : Control
 {
-	// Config
-	public static float SCROLL_MODULA = 10; // how long it takes to scroll to the next row
-	public static float MAX_SCROLL = 10;
-	public static int INDEX_PER_COLLUM = 7;
+	// Config / readonlies
+	public readonly static float SCROLL_MODULA = 10; // how long it takes to scroll to the next row
+	public readonly static int INDEX_PER_COLLUM = 7;
+	public readonly static int SLOT_AMOUNT = INDEX_PER_COLLUM * 4 + 1;
 	// General Data
 	public static bool IS_ON_MAIN_UI_ELEMENT = false;
-	public static int SORTING_TYPE = 1; // 1: default, 2: Inverse default, 3: Name
+	public static string SEARCH_QUERY = "";
+	public static int SORTING_TYPE = 3; // 1: default, 2: Inverse default, 3: Name
 	// Objects
 	public static Panel NODE_BACKGROUND;
 	public static Panel ITEM_TEMPLATE;
 	public static GridContainer ITEM_STORAGE;
+	public static TextEdit SEARCH_BAR;
+
+	public static MouseRect SEARCH_MOUSE_RECT;
 	public static MouseRect MOUSE_RECT;
 
 	/*
@@ -25,7 +40,7 @@ public partial class Inventory : Control
 
 		Inventory will be stored in a dict
 		in every entry of the dict there will we another dict which consists
-		of rows which will be the items in the inv
+		of rows which will e the items in the inv
 
 		to display it get mousemodula and get the 4 rows beneath them
 		draw those
@@ -34,30 +49,50 @@ public partial class Inventory : Control
 		done :D
 	*/
 	public static Dictionary<int,Dictionary<int,string>> INVENTORY = new Dictionary<int, Dictionary<int, string>> {};
+	public static int[] DISPLAYED_ROWS = new int[4]{0,1,2,3}; // rows that will be displayed
 
 	// Privates
 	private float ModulaDelta = 0;
 	private float Mousedelta = 0;
 
+	private delegate void ProcessComputeLoop();
+	ProcessComputeLoop Loop;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready() {
+		// Gets nodes first otherwise shit cannot be found
+		NODE_BACKGROUND = GetNode<Panel>("Background");
+		ITEM_TEMPLATE = GetNode<Panel>("Contents/Template/Template");
+		ITEM_STORAGE = GetNode<GridContainer>("Contents");
+		SEARCH_BAR = GetNode<TextEdit>("SearchBar/TextBar");
+		// Set up mous rect
+		MOUSE_RECT = new MouseRect(NODE_BACKGROUND);
+		SEARCH_MOUSE_RECT = new MouseRect(SEARCH_BAR);
+
+		// First off load the slots because we need them to be ready
+		SetupInventorySlots();
 		// Loads the data to the inventory
 		// Sorting can be done afterwards
 		void DataBuffer(Dictionary<string,int> _DataPacket) {
 			foreach((string ItemName, int Amount) in _DataPacket) {
 				InvAnalytics.WriteBufferData(ItemName,Amount,InvAnalytics.PLAYER_HISTORY_DATA[ItemName]); // write to buffer so it fills missing data gaps
 				if(Amount > 0) {
-					InventoryData.AddItemToDataBase(ItemName,Amount,null,false);
+					InventoryData.AddItemToDataBase(ItemName,Amount,null,false,true);
 				}
 			}
 
 			InventoryHandler.DrawInventory();
 		}
-
-		// Gets nodes first otherwise shit cannot be found
-		NODE_BACKGROUND = GetNode<Panel>("Background");
-		ITEM_TEMPLATE = GetNode<Panel>("Contents/Template/Template");
-		ITEM_STORAGE = GetNode<GridContainer>("Contents");
+		// Cleans the searchbar
+		void CleanSearchBar() {
+			if(SEARCH_BAR.Text == "") {
+				SEARCH_BAR.Text = "Search here...";
+			}
+		}
+		void InitiateSearch() {
+			SEARCH_BAR.Text = "";
+			SEARCH_QUERY = "";
+		}
 
         // Load That shit up
 		// Laods the i9nvenytory and history
@@ -67,26 +102,51 @@ public partial class Inventory : Control
 		// we load it all up
 		DataBuffer(InvAnalytics.PLAYER_DATA);
 
-		// Set up mous rect
-		MOUSE_RECT = new MouseRect(NODE_BACKGROUND);
+		// Delegate Shit
+		Loop += HandleScrollModula;
+		Loop += RenderInventory;
+
+		SEARCH_BAR.FocusExited += () => CleanSearchBar();
+		SEARCH_BAR.FocusEntered += () => InitiateSearch();
 	}
 
 	// handles the mouse movement
     public override void _Input(InputEvent _Event) {
+		// handles disconnecting when clicking outside of the box
+		if(_Event is InputEventMouseButton MouseButton) {
+			if(MouseButton.ButtonIndex == Godot.MouseButton.Left) {
+				if(SEARCH_MOUSE_RECT.Get() == false && SEARCH_BAR.HasFocus()) {
+					SEARCH_BAR.ReleaseFocus();
+				}
+			}
+		}
 		if(_Event is InputEventMouseMotion MouseEvent) {
 			MOUSE_RECT.Step(MouseEvent.Position);
+			SEARCH_MOUSE_RECT.Step(MouseEvent.Position);
+		}
+		if(_Event is InputEventKey CurrentKey) {
+			if(CurrentKey.PhysicalKeycode == Key.Enter && SEARCH_BAR.HasFocus()) {
+				SEARCH_BAR.ReleaseFocus();
+			}
+			if(SEARCH_BAR.HasFocus()) {
+				SEARCH_QUERY = SEARCH_BAR.Text;
+			}
 		}
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double _Delta) {
 		IS_ON_MAIN_UI_ELEMENT = MOUSE_RECT.Get();
+		
+		Loop();
+	}
 
+	private void HandleScrollModula() {
 		// Mouse wheel input Junk
 		if(Input.IsActionJustReleased("Movement_Zoom_Down") && IS_ON_MAIN_UI_ELEMENT) {
-			Mousedelta = Math.Clamp(Mousedelta + 1,0,MAX_SCROLL * SCROLL_MODULA);
+			Mousedelta = Math.Clamp(Mousedelta + 1,0,(INVENTORY.Count - 4) * SCROLL_MODULA);
         } else if(Input.IsActionJustReleased("Movement_Zoom_Up") && IS_ON_MAIN_UI_ELEMENT) {
-			Mousedelta = Math.Clamp(Mousedelta - 1,0,MAX_SCROLL * SCROLL_MODULA);
+			Mousedelta = Math.Clamp(Mousedelta - 1,0,(INVENTORY.Count - 4) * SCROLL_MODULA);
         }
 
 		// Modula stuff
@@ -95,15 +155,114 @@ public partial class Inventory : Control
 		Mousedelta / SCROLL_MODULA :
 		ModulaDelta;
 		
-		ModulaDelta = Math.Clamp(ModulaDelta,0,MAX_SCROLL);
+		ModulaDelta = !INVENTORY.ContainsKey(3) ? 0 : Math.Clamp(ModulaDelta,0,INVENTORY.Count - 4); // - 4 cuz there are 4 visible rows in the inventory at all times
+
+		// Apply it
+		for(int Increment = 0; Increment < DISPLAYED_ROWS.Length; Increment++) {
+			DISPLAYED_ROWS[Increment] = Increment + (int)ModulaDelta;
+		}
+	}
+
+	// Sets the inventory up
+	private void SetupInventorySlots() {
+		for(int SlotIncrement = 1; SlotIncrement < SLOT_AMOUNT; SlotIncrement++) {
+			Node TemplateDuplicate =  ITEM_TEMPLATE.Duplicate();
+			ITEM_STORAGE.AddChild(TemplateDuplicate);
+			
+			TemplateDuplicate.Name = (SlotIncrement - 1).ToString();
+			((Panel)TemplateDuplicate).Visible = false;
+		}
 	}
 
 	// Sorts the visual inventory
-	public static void SortVisualInventory() {
 
+	// update, HOLY SHIT, It actually works
+	public static void RenderInventory() {
+		// we first of store all the shit
+		// cuz IDK if theres a layout order
+
+		// Empties a certain slots data
+		void EmptySelectedSlot(Panel SelectedSlot) {
+			((RichTextLabel)SelectedSlot.FindChild("Amount",true,false)).Text = "100";
+			SelectedSlot.Visible = false;
+			return;
+		}
+
+		/* Okay so little me idea
+			we first fill the entire inventory with templates
+			then assign to those templates based on which position they are in the hieracy
+			so no generating slots when items get added
+			all the slots are there, but they are invisible
+			and once a item is added it becomes visible
+		*/
+
+		// Empty all the slots
+		foreach(Node TemplateInstance in ITEM_STORAGE.GetChildren()) {
+			if(TemplateInstance.GetClass() == "Panel") {
+				EmptySelectedSlot((Panel)TemplateInstance);
+			}
+		}
+
+		int CurrentSlotSelector = 0; // Based on name
+		// Loop through all the entries in the Displayed rows
+		for(int DisplayedIncrement = 0; DisplayedIncrement < DISPLAYED_ROWS.Length; DisplayedIncrement++) {
+			// Loop though all the slots on that row
+			for(int RowIncrement = 0; RowIncrement < INDEX_PER_COLLUM; RowIncrement++) {
+				if(!INVENTORY.ContainsKey(DISPLAYED_ROWS[DisplayedIncrement])) {
+					return;
+				}
+
+
+				// Check if key exist
+				if(INVENTORY[DISPLAYED_ROWS[DisplayedIncrement]].ContainsKey(RowIncrement)) {
+					if(SEARCH_QUERY == "" || INVENTORY[DISPLAYED_ROWS[DisplayedIncrement]][RowIncrement].ToLower().Contains(SEARCH_QUERY.ToLower())) {
+						Node SelectedSlot = ITEM_STORAGE.FindChild(CurrentSlotSelector.ToString(),true,false);
+
+						if(SelectedSlot == null) {
+							GD.PushWarning("Inventory Warning: Slot number " + CurrentSlotSelector + " Doesn't exist");
+						} else {
+							((Panel)SelectedSlot).Visible = true;
+							((RichTextLabel)SelectedSlot.FindChild("Amount",true,false)).Text = INVENTORY[DISPLAYED_ROWS[DisplayedIncrement]][RowIncrement].ToString(); // DEBUG;
+						}
+						CurrentSlotSelector++;
+					}
+				}
+			}
+		}
+
+		// TOTALLY FUCKING USLESS
+		/*
+		foreach(Node InvetorySlot in ITEM_STORAGE.GetChildren()) {
+			string ObjectType = InvetorySlot.GetClass();
+
+			if(ObjectType == "Panel") {
+				ITEM_STORAGE.RemoveChild(InvetorySlot);
+				ITEM_CACHE.AddChild(InvetorySlot);
+			}
+		}
+
+		for(int CollumIncrement = 0; CollumIncrement < INVENTORY.Count; CollumIncrement++) {
+			int TargetCollum = INVENTORY.Count - (CollumIncrement + 1);
+
+			for(int RowIncrement = 0; RowIncrement < INVENTORY[TargetCollum].Count; RowIncrement++) {
+				int TargetRow = INVENTORY[TargetCollum].Count - (RowIncrement + 1);
+
+				string ItemName = INVENTORY[CollumIncrement][TargetRow];
+
+				Node CurrentItem = ITEM_CACHE.FindChild(ItemName,true,false);
+
+				if(CurrentItem != null) {
+					ITEM_CACHE.RemoveChild(CurrentItem);
+					ITEM_STORAGE.AddChild(CurrentItem);
+				} else {
+					GD.PushWarning("Cannot find itemslot named " + ItemName);
+				}
+			}
+		}*/
 	}
 
 	// Updates A Certain Slot
+	/*
 	public static void UpdateInventorySlot(string _slotName) {
 		if(!InvAnalytics.PLAYER_DATA.ContainsKey(_slotName)) {
 			GD.PushError("Item named " + _slotName + " Does not exist");
@@ -122,11 +281,12 @@ public partial class Inventory : Control
 					ITEM_STORAGE.AddChild(TemplateDuplicate);
 
 					TemplateDuplicate.Name = _slotName;
+					((RichTextLabel)TemplateDuplicate.FindChild("Amount",true,false)).Text = InvAnalytics.EncryptDataEntry(_slotName).ToString(); // DEBUG
 					((Panel)TemplateDuplicate).Visible = true;
 				}
 			}
 		}
-	}
+	}*/
 }
 
 // Handles data garbage
@@ -134,7 +294,19 @@ public partial class Inventory : Control
 public partial class InventoryData : Inventory {
 	// Adds items to inventory
 	// handles minus aswell as posetive values
-	public static void AddItemToDataBase(string _ItemName, int _DesiredValue, int? _History, bool _FuckWithHistory) { // pass in null in history if you want it to retain its value
+	public static void AddItemToDataBase(string _ItemName, int _DesiredValue, int? _History, bool _FuckWithHistory,bool _Static) { // pass in null in history if you want it to retain its value
+		// _ItemName : name of the item
+		// _Desiredvalue : how much of said item needs to be added
+		// _History : if theres a desired history value
+		// _FuckWithHistory : should it change stuff with history
+		// _Static : disables drawing the inventory
+
+		// static is mainly called when loading up
+		// because we load the items up non-chronological
+		// so the history isnt loaded chronologically
+		// this results in data breaking
+		// becuase its missing gaps
+
 		// Only write when needed
 		if(InvAnalytics.PLAYER_DATA[_ItemName] != _DesiredValue || InvAnalytics.PLAYER_HISTORY_DATA[_ItemName] != _History) {
 			_History = _History == null ? InvAnalytics.PLAYER_HISTORY_DATA[_ItemName] : _History;
@@ -147,7 +319,10 @@ public partial class InventoryData : Inventory {
 		} else {
 			InventoryHandler.RemoveFromInventory(_ItemName);
 		}
-		UpdateInventorySlot(_ItemName);
+		// Check for static, just in case we dont wanna do weird stuff with history
+		if(!_Static) {
+			InventoryHandler.DrawInventory();
+		}
 	}
 
 	// Prints the inventory for debugging case
@@ -199,52 +374,112 @@ public partial class InventoryData : Inventory {
 
 public partial class InventoryHandler : Inventory {
 	// Sorts all the garabage
-	public static void DrawInventory() {
+	public static void DrawInventory() {		
 		// Dont fuck with history
 		// method is meant to sort inventory based on history OR Alphabetical order
 		Dictionary<int,Dictionary<int,string>> InventoryClone = new Dictionary<int, Dictionary<int, string>>();
-
-		int CurrentIndex = SORTING_TYPE == 2 ? InvAnalytics.PLAYER_HISTORY_DATA.Count : 1;
+		int HighestIndex = 1;
 		int CurrentRowIndex = 0;
 		int CurrentCollumIndex = 0;
 
-		// Holy shit this a mouth full
-
-		// Basically get all the entries history
-		for(int IndexIncrement = 0; IndexIncrement < InvAnalytics.PLAYER_HISTORY_DATA.Count; IndexIncrement++) {
-			// Loop though all the entries in the inventory
-			foreach((int CollumIndex, Dictionary<int,string> CollumEntry) in INVENTORY) {
-				foreach((int RowIndex, string ItemName) in CollumEntry) {
-
-					// do some weird shit if it matches
-					if(InvAnalytics.PLAYER_HISTORY_DATA[ItemName] == CurrentIndex) {
-						if(!InventoryClone.ContainsKey(CurrentCollumIndex)) {
-							InventoryClone.Add(CurrentRowIndex, new Dictionary<int, string>());
-						}
-
-						InventoryClone[CurrentCollumIndex].Add(CurrentRowIndex,ItemName);
-						CurrentRowIndex++;
-
-						if(CurrentRowIndex > INDEX_PER_COLLUM) {
-							CurrentRowIndex = 0;
-							CurrentRowIndex++;
-						}
-						
-						if(SORTING_TYPE == 2) {
-							CurrentIndex--;
-						} else {
-							CurrentIndex++;
-						}
-					}
-				}
+		// determin the highest history index possible
+		foreach((string ItemName, int HistoryIndex) in InvAnalytics.PLAYER_HISTORY_DATA) {
+			if(HistoryIndex > HighestIndex) {
+				HighestIndex = HistoryIndex;
+			}
+			if(HistoryIndex == InvAnalytics.PLAYER_HISTORY_DATA.Count) {
+				break;
 			}
 		}
 
+		int CurrentIndex = SORTING_TYPE == 2 ? HighestIndex : 1;
+		// Holy shit this a mouth full
+		if(SORTING_TYPE == 1 || SORTING_TYPE == 2) {
+			// Basically get all the entries history
+			for(int IndexIncrement = 0; IndexIncrement < HighestIndex; IndexIncrement++) {
+				bool Matched = false;
+
+				// Loop though all the entries in the inventory
+				foreach((int CollumIndex, Dictionary<int,string> CollumEntry) in INVENTORY) {
+					foreach((int RowIndex, string ItemName) in CollumEntry) {						
+						// do some weird shit if it matches
+						if(InvAnalytics.PLAYER_HISTORY_DATA[ItemName] == CurrentIndex) {
+							if(!InventoryClone.ContainsKey(CurrentCollumIndex)) {
+								InventoryClone.Add(CurrentCollumIndex, new Dictionary<int, string>());
+							}
+
+							InventoryClone[CurrentCollumIndex].Add(CurrentRowIndex,ItemName);
+							CurrentRowIndex++;
+							Matched = true;
+
+							if(CurrentRowIndex > INDEX_PER_COLLUM - 1) {
+								CurrentRowIndex = 0;
+								CurrentCollumIndex++;
+							}
+							
+							if(SORTING_TYPE == 2) {
+								CurrentIndex--;
+							} else {
+								CurrentIndex++;
+							}
+							break;
+						}
+					}
+					if(Matched) {
+						break;
+					}
+				}
+			}
+		} else if(SORTING_TYPE == 3) { // A-Z sorting
+			// Removes all the nesting
+			Dictionary<int,string> UnnestedDict = new Dictionary<int, string>();
+			int DictCount = 0;
+			for(int CollumIncrement = 0; CollumIncrement < INVENTORY.Count; CollumIncrement++) {
+				for(int RowIncrement = 0; RowIncrement < INVENTORY[CollumIncrement].Count; RowIncrement++) {
+					UnnestedDict.Add(DictCount,INVENTORY[CollumIncrement][RowIncrement]);
+					DictCount++;
+				}
+			}
+
+			// Determin length of inventory
+			int InventoryLength = UnnestedDict.Count;
+
+			// use a bubble sort algorithm to sort it alphabetically
+			// im not gonna act like i know whats going on, but it works 👍👍👍
+			for(int Increment = 0; Increment < InventoryLength; Increment++) {
+				for(int SecondIncrement = 0; SecondIncrement < InventoryLength - 1; SecondIncrement++) {
+					if(UnnestedDict[SecondIncrement].CompareTo(UnnestedDict[SecondIncrement + 1]) > 0) {
+						string TempCache = UnnestedDict[SecondIncrement];
+
+						UnnestedDict[SecondIncrement] = UnnestedDict[SecondIncrement + 1];
+						UnnestedDict[SecondIncrement + 1] = TempCache;
+					}
+				}
+			}
+
+			// simple assigning stuff for the inventory format
+			for(int TempInvIncrement = 0; TempInvIncrement < UnnestedDict.Count; TempInvIncrement++) {
+				if(!InventoryClone.ContainsKey(CurrentCollumIndex)) {
+					InventoryClone.Add(CurrentCollumIndex, new Dictionary<int, string>());
+				}
+
+				InventoryClone[CurrentCollumIndex].Add(CurrentRowIndex,UnnestedDict[TempInvIncrement]);
+				CurrentRowIndex++;
+
+				if(CurrentRowIndex > INDEX_PER_COLLUM - 1) {
+					CurrentRowIndex = 0;
+					CurrentCollumIndex++;
+				}
+				
+				CurrentIndex++;
+			}
+		}
+	
 		if(InventoryClone.Count == 0) {
 			return;
 		}
 		INVENTORY = new Dictionary<int, Dictionary<int, string>>(InventoryClone);
-		Inventory.SortVisualInventory();
+		Inventory.RenderInventory();
 	}
 
 	// Removes shit that aint wnated
@@ -349,7 +584,6 @@ public partial class InventoryHandler : Inventory {
 					InvAnalytics.PLAYER_HISTORY_DATA[ItemName]--;
 				}
 			}
-			DrawInventory();
 		}
 	}
 
@@ -376,7 +610,7 @@ public partial class InventoryHandler : Inventory {
 				foreach((int Index, Dictionary<int,string> Collum) in INVENTORY) {
 					foreach((int CollumIndex, string ItemName) in Collum) {
 						if(ItemName != _ItemName) {
-							InvAnalytics.WriteBufferData(_ItemName,InvAnalytics.PLAYER_DATA[_ItemName],InvAnalytics.PLAYER_HISTORY_DATA[_ItemName] + 1); // write to set history
+							InvAnalytics.WriteBufferData(ItemName,InvAnalytics.PLAYER_DATA[ItemName],InvAnalytics.PLAYER_HISTORY_DATA[ItemName] + 1); // write to set history
 						}
 					}
 				}
@@ -404,7 +638,6 @@ public partial class InventoryHandler : Inventory {
 			}
 
 			Push();
-			DrawInventory();
 		} else {
 			// Move said item to the first entry of this shit
 			// this means that there will need to be a push till the gap is reached
@@ -412,12 +645,11 @@ public partial class InventoryHandler : Inventory {
 
 			foreach((string ItemName, int HistoryIndex) in InvAnalytics.PLAYER_HISTORY_DATA) {
 				if(HistoryIndex < Breakpoint) {
-					InvAnalytics.PLAYER_HISTORY_DATA[ItemName]++;
+					InvAnalytics.WriteBufferData(_ItemName,InvAnalytics.PLAYER_DATA[_ItemName],InvAnalytics.PLAYER_HISTORY_DATA[ItemName]++); // wirte to set history
 				}
 			}
 
-			InvAnalytics.PLAYER_HISTORY_DATA[_ItemName] = 1;
-			DrawInventory();
+			InvAnalytics.WriteBufferData(_ItemName,InvAnalytics.PLAYER_DATA[_ItemName],1); // wirte to set history
 
 			return;
 		}
@@ -426,9 +658,16 @@ public partial class InventoryHandler : Inventory {
 	// FIxxes gapos in the inventory
 	public static void PatchInventoryData() {
 		int CurrentHistoryIndex = 1;
+		int HighestIndex = 1;
 		bool FireSaveEvent = false;
+
+		foreach((string ItemName, int HistoryIndex) in InvAnalytics.PLAYER_HISTORY_DATA) {
+			if(HistoryIndex > HighestIndex) {
+				HighestIndex = HistoryIndex;
+			}
+		}
 		
-		for(int HistoryIncerement = 0; HistoryIncerement < InvAnalytics.PLAYER_HISTORY_DATA.Count - 1; HistoryIncerement++) {
+		for(int HistoryIncerement = 0; HistoryIncerement < HighestIndex; HistoryIncerement++) {
 			bool PatchCorrecting = true;
 
 			// Check if the history index exists
@@ -443,13 +682,13 @@ public partial class InventoryHandler : Inventory {
 			}
 
 			// if said item is missing, we do some funky shit
-			// bascially just throwing it out and shoving everything down
+			// bascially just shoving everything down
 			if(PatchCorrecting) {
-				GD.PushWarning("Fixing History Corruption");
+				GD.PushWarning("Fixing History Corruption " + CurrentHistoryIndex);
 
 				foreach ((string ItemName,int HistoryIndex) in InvAnalytics.PLAYER_HISTORY_DATA) {
 					if(HistoryIndex > CurrentHistoryIndex) {
-						InvAnalytics.PLAYER_HISTORY_DATA[ItemName]--;
+						InvAnalytics.WriteBufferData(ItemName,InvAnalytics.PLAYER_DATA[ItemName],InvAnalytics.PLAYER_HISTORY_DATA[ItemName] - 1); // wirte to set history
 					}
 				}
 			}

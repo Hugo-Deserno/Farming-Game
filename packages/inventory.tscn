@@ -74,7 +74,7 @@ offset_right = 110.0
 offset_bottom = 110.0
 size_flags_stretch_ratio = 0.0
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Contents/Template/Template"]
+[node name="Amount" type="RichTextLabel" parent="Contents/Template/Template"]
 z_index = 5
 layout_mode = 0
 offset_left = 16.0

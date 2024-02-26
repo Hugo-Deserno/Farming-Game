@@ -24,7 +24,37 @@ public class DataRepository : DataHandler {
 
 	// Inv Encryptions junk
     public static Dictionary<int,string> INVENTORY_ENCRYPTION_KEY = new Dictionary<int, string>{
-        [1] = "Wheat", [2] = "Stone", [3] = "Wood",// [4] = "Epic",
+        [1] = "Wheat", [2] = "Stone", [3] = "Wood",
+[4] = "Epic1",
+[5] = "Epic2",
+[6] = "Epic3",
+[7] = "Epic4",
+[8] = "Epic5",
+[9] = "Epic6",
+[10] = "Epic7",
+[11] = "Epic8",
+[12] = "Epic9",
+[13] = "Epic10",
+[14] = "Epic11",
+[15] = "Epic12",
+[16] = "Epic13",
+[17] = "Epic14",
+[18] = "Epic15",
+[19] = "Epic16",
+[20] = "Epic17",
+[21] = "Epic18",
+[22] = "Epic19",
+[23] = "Epic20",
+[24] = "Epic21",
+[25] = "Epic22",
+[26] = "Epic23",
+[27] = "Epic24",
+[28] = "Epic25",
+[29] = "Epic26",
+[30] = "Epic27",
+[31] = "Epic28",
+[32] = "Epic29",
+[33] = "Epic30",
     };
 
 
