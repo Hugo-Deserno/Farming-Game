@@ -12,3 +12,4 @@ res://Scripts/Frontend/Features/PlacingVoxelGridHandler.cs
 res://Scripts/Frontend/Interface/CommandConsole.cs
 res://Scripts/Frontend/Interface/Inventory.cs
 res://Scripts/Frontend/Interface/MouseCursor.cs
+res://Packages/Objects/Character.tscn

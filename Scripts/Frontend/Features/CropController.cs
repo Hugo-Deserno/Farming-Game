@@ -207,7 +207,7 @@ public partial class CropController : Node {
 
         (int? Stage, int? Time) = FetchCropData(CropName);
 
-        if(CropStage == (int)Stage) {
+        if(Stage != null && CropStage == (int)Stage) {
             BindNode.QueueFree();
 
              // Gets inventory item
