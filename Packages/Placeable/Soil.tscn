@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://dpnrflb43fm25"]
+
+[ext_resource type="Texture2D" uid="uid://cxxc5xxswrps6" path="res://Assets/Soil.png" id="1_0u4mq"]
+[ext_resource type="ArrayMesh" uid="uid://dddsg2pol3k6p" path="res://Assets/Soil.obj" id="2_wmswc"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_f1vnm"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qbgs1"]
+albedo_texture = ExtResource("1_0u4mq")
+texture_filter = 0
+
+[node name="Soil" type="Node3D"]
+
+[node name="Hitbox" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 2.5, 0, 0, 0, 1, 0, 1.265, 0)
+visible = false
+mesh = SubResource("BoxMesh_f1vnm")
+
+[node name="Prefab" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.503, 0)
+
+[node name="Soil" type="MeshInstance3D" parent="Prefab"]
+transform = Transform3D(0.501, 0, 0, 0, 0.421, 0, 0, 0, 0.501, 0, -0.480061, -0.000651032)
+material_override = SubResource("StandardMaterial3D_qbgs1")
+mesh = ExtResource("2_wmswc")
+skeleton = NodePath("../..")
+
+[node name="ItemMeta" type="Node" parent="."]
+metadata/Type = 1
+metadata/Id = 2
+metadata/Cost = 10
+metadata/PlantType = ""
+metadata/PlantStage = 0
+metadata/TimeRemaining = 0
+metadata/Date = 0

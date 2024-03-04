@@ -1,4 +1,6 @@
 Node
+DirectionalLight3D
+TextureButton
 TextureRect
 RichTextLabel
 TextEdit
@@ -10,5 +12,3 @@ FlowContainer
 Button
 BoxContainer
 HBoxContainer
-ColorRect
-PanelContainer

@@ -8,11 +8,11 @@ public partial class Fps : RichTextLabel
 	{
 		Text = "Fps " + Engine.GetFramesPerSecond();
 
-		Vector3 Pos = GridHandler.RayCastFromCursor(new Godot.Collections.Array<Godot.Rid>{},"FloorColision");
+		Vector3 Pos = PlacingGridHandler.RayCastFromCursor(new Godot.Collections.Array<Godot.Rid>{},"FloorColision");
 
 		float magclose = 10000000;
 		Node3D vox = null;
-		foreach((string VoxelCords,Node3D Voxel) in VoxelGridHandler.VOXEL_GRID_LIBRARY) {
+		foreach((string VoxelCords,Node3D Voxel) in PlacingVoxelGridHandler.VOXEL_GRID_LIBRARY) {
 			Vector3 diff = Pos - Voxel.Position;
 
 			float mag = (float)Math.Sqrt(diff.X * diff.X + diff.Y * diff.Y + diff.Z * diff.Z);

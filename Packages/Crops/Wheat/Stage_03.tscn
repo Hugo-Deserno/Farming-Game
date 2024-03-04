@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://byxw36nefs3ou"]
+
+[ext_resource type="Texture2D" uid="uid://gn53nrx72c0n" path="res://Assets/FenceMiddle.png" id="1_llce6"]
+[ext_resource type="ArrayMesh" uid="uid://7vd8gnuuhlsf" path="res://Assets/FenceMiddle.obj" id="2_w8027"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rc0yy"]
+albedo_texture = ExtResource("1_llce6")
+texture_filter = 0
+
+[node name="FenceMiddle" type="Node3D"]
+
+[node name="Bridge" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_rc0yy")
+mesh = ExtResource("2_w8027")

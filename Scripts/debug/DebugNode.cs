@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
 
 public partial class DebugNode : Node
@@ -8,7 +9,7 @@ public partial class DebugNode : Node
 
     public override void _Ready()
     {
-        GridHandler.PLACING_SYSTEM = new GridSystem3D("Lantern");
+        PlacingGridHandler.PLACING_SYSTEM = new GridSystem3D("Lantern");
     }
 
     bool VoxelVisualization = false;
@@ -16,8 +17,41 @@ public partial class DebugNode : Node
     bool VoxeGridVisualiztaion = false;
     public override void _Process(double delta)
     {
-        if(Input.IsActionJustPressed("Debug_Placing") && !GridHandler.IS_PLACING && GetViewport().GuiGetFocusOwner() == null) {
-            GridHandler.PLACING_SYSTEM.Enable();    
+        if(Input.IsActionJustPressed("Debug_Placing") && !PlacingGridHandler.IS_PLACING && GetViewport().GuiGetFocusOwner() == null) {
+            PlacingGridHandler.PLACING_SYSTEM.Enable();    
+        }
+        if(Input.IsActionJustPressed("Debug_Plant")) {
+            MeshInstance3D obj = DemolitionTool.RayCastPlacedObject(new Godot.Collections.Array<Rid>(),"ItemCollision");
+
+        	Node3D SelectedNode = obj != null ? obj.GetParent<Node3D>() : null;
+            if(obj == null) {
+                return;
+            }
+
+            Node metanode = obj.GetParent<Node3D>().FindChild("ItemMeta",true,false);
+            if ((int)metanode.GetMeta("Id",0) == 2) {
+                ulong? ObjectID = CropController.BindCropToObject("Wheat",SelectedNode);
+                CropController.StartCropCycle(ObjectID);
+                /*
+                CreateNewCropInstance Plant = new CreateNewCropInstance("Wheat",SelectedNode);
+                //Plant.OverrideData(2,5);
+                Plant.InstantiateCycle();*/
+            }
+        }
+        if(Input.IsActionJustPressed("Placing_Place")) {
+            MeshInstance3D obj = DemolitionTool.RayCastPlacedObject(new Godot.Collections.Array<Rid>(),"ItemCollision");
+
+        	Node3D SelectedNode = obj != null ? obj.GetParent<Node3D>() : null;
+            if(obj == null) {
+                return;
+            }
+
+            Node metanode = obj.GetParent<Node3D>().FindChild("ItemMeta",true,false);
+            if ((int)metanode.GetMeta("Id",0) == 2) {
+                if((bool)CropController.HasBind(SelectedNode.GetInstanceId())) {
+                    CropController.HarvestCrop(SelectedNode.GetInstanceId());
+                }
+            }
         }
 
         /*
@@ -38,11 +72,11 @@ public partial class DebugNode : Node
 
         // Togles the purchase state
         if(Input.IsActionJustPressed("Debug_Voxel_Tag")) {
-            Vector3 Pos = GridHandler.RayCastFromCursor(new Godot.Collections.Array<Godot.Rid>{},"FloorColision");
+            Vector3 Pos = PlacingGridHandler.RayCastFromCursor(new Godot.Collections.Array<Godot.Rid>{},"FloorColision");
 
             float magclose = 10000000;
             Node3D vox = null;
-            foreach((string VoxelCords,Node3D Voxel) in VoxelGridHandler.VOXEL_GRID_LIBRARY) {
+            foreach((string VoxelCords,Node3D Voxel) in PlacingVoxelGridHandler.VOXEL_GRID_LIBRARY) {
                 Vector3 diff = Pos - Voxel.Position;
 
                 float mag = (float)Math.Sqrt(diff.X * diff.X + diff.Y * diff.Y + diff.Z * diff.Z);

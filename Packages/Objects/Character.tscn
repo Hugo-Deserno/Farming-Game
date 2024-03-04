@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://bh2yewd4k7lhq"]
+
+[ext_resource type="Script" path="res://Scripts/Frontend/Features/ControllerCharacter.cs" id="1_hqjq4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fu8bw"]
+
+[node name="Character" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.765099, -3.05176e-05, -0.220856)
+
+[node name="CharacterBody" type="CharacterBody3D" parent="."]
+script = ExtResource("1_hqjq4")
+metadata/CameraXAngle = -60.0
+metadata/CameraSensitivity = 5.5
+metadata/CameraSpeed = 4.0
+metadata/CameraFieldOfView = 70.0
+
+[node name="CameraRoot" type="Node3D" parent="CharacterBody"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+rotation_edit_mode = 2
+
+[node name="Camera" type="Camera3D" parent="CharacterBody/CameraRoot"]
+current = true
+
+[node name="Collider" type="CollisionShape3D" parent="CharacterBody"]
+shape = SubResource("BoxShape3D_fu8bw")
+disabled = true

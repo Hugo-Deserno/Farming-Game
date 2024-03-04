@@ -1,0 +1,74 @@
+[gd_scene load_steps=6 format=3 uid="uid://b5gt0yfc3wo63"]
+
+[ext_resource type="Script" path="res://Scripts/Frontend/Interface/CommandConsole.cs" id="1_fhm0k"]
+[ext_resource type="Script" path="res://Scripts/Frontend/Interface/MouseCursor.cs" id="2_m2bl8"]
+[ext_resource type="Texture2D" uid="uid://c7u0o6ypmnfg8" path="res://Images/Mouse_Cursor.png" id="3_kd5td"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_aal30"]
+content_margin_left = 10.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_st7yx"]
+content_margin_left = 10.0
+bg_color = Color(0, 0, 0, 0.584314)
+
+[node name="Workspace" type="Node3D"]
+
+[node name="CommandConsole" type="Node" parent="."]
+script = ExtResource("1_fhm0k")
+
+[node name="ConsoleController" type="Control" parent="CommandConsole"]
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 40.0
+grow_vertical = 0
+size_flags_horizontal = 3
+
+[node name="LSP" type="TextEdit" parent="CommandConsole/ConsoleController"]
+visible = false
+layout_mode = 0
+offset_left = -1.0
+offset_top = 9.0
+offset_right = 99999.0
+offset_bottom = 47.0
+mouse_filter = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_aal30")
+text = "LSP
+
+"
+
+[node name="Console" type="TextEdit" parent="CommandConsole/ConsoleController"]
+visible = false
+layout_mode = 0
+offset_left = -1.0
+offset_top = 9.0
+offset_right = 99999.0
+offset_bottom = 47.0
+mouse_default_cursor_shape = 0
+theme_override_colors/background_color = Color(0.647059, 0.647059, 0.647059, 0.109804)
+theme_override_styles/normal = SubResource("StyleBoxFlat_st7yx")
+text = "Press '/' to start typing.
+"
+
+[node name="MouseCursor" type="Control" parent="."]
+z_index = 1000
+layout_mode = 3
+anchors_preset = 0
+offset_top = 612.0
+offset_right = 40.0
+offset_bottom = 652.0
+mouse_filter = 2
+script = ExtResource("2_m2bl8")
+
+[node name="CursorIcon" type="TextureRect" parent="MouseCursor"]
+texture_filter = 1
+texture_repeat = 1
+layout_mode = 0
+offset_top = 4.0
+offset_right = 32.0
+offset_bottom = 36.0
+mouse_filter = 2
+texture = ExtResource("3_kd5td")
+stretch_mode = 5
