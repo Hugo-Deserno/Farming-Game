@@ -1,0 +1,45 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\hugod\\OneDrive\\Documents\\Fragmatic-Projects\\farming-game\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{237968B3-269E-47FF-92BD-B77880B4C0E6}|Farming Game.csproj|c:\\users\\hugod\\onedrive\\documents\\fragmatic-projects\\farming-game\\scripts\\test.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{237968B3-269E-47FF-92BD-B77880B4C0E6}|Farming Game.csproj|solutionrelative:scripts\\test.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "test.cs",
+              "DocumentMoniker": "C:\\Users\\hugod\\OneDrive\\Documents\\Fragmatic-Projects\\farming-game\\Scripts\\test.cs",
+              "RelativeDocumentMoniker": "Scripts\\test.cs",
+              "ToolTip": "C:\\Users\\hugod\\OneDrive\\Documents\\Fragmatic-Projects\\farming-game\\Scripts\\test.cs",
+              "RelativeToolTip": "Scripts\\test.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-26T18:21:34.168Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
