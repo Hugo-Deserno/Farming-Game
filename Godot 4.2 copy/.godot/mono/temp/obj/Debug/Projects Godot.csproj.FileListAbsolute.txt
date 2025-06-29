@@ -1,0 +1,72 @@
+C:\Users\hugod\OneDrive\Documents\Projects_Godot\RTS\.godot\mono\temp\obj\Debug\Projects Godot.csproj.AssemblyReference.cache
+C:\Users\hugod\OneDrive\Documents\Projects_Godot\RTS\.godot\mono\temp\obj\Debug\Projects Godot.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\hugod\OneDrive\Documents\Projects_Godot\RTS\.godot\mono\temp\obj\Debug\Projects Godot.AssemblyInfoInputs.cache
+C:\Users\hugod\OneDrive\Documents\Projects_Godot\RTS\.godot\mono\temp\obj\Debug\Projects Godot.AssemblyInfo.cs
+C:\Users\hugod\OneDrive\Documents\Projects_Godot\RTS\.godot\mono\temp\obj\Debug\Projects Godot.csproj.CoreCompileInputs.cache
+C:\Users\hugod\OneDrive\Documents\Projects_Godot\RTS\.godot\mono\temp\obj\Debug\Projects Godot.sourcelink.json
+C:\Users\hugod\OneDrive\Documents\Projects_Godot\RTS\.godot\mono\temp\bin\Debug\Projects Godot.deps.json
+C:\Users\hugod\OneDrive\Documents\Projects_Godot\RTS\.godot\mono\temp\bin\Debug\Projects Godot.runtimeconfig.json
+C:\Users\hugod\OneDrive\Documents\Projects_Godot\RTS\.godot\mono\temp\bin\Debug\Projects Godot.dll
+C:\Users\hugod\OneDrive\Documents\Projects_Godot\RTS\.godot\mono\temp\bin\Debug\Projects Godot.pdb
+C:\Users\hugod\OneDrive\Documents\Projects_Godot\RTS\.godot\mono\temp\bin\Debug\GodotSharp.dll
+C:\Users\hugod\OneDrive\Documents\Projects_Godot\RTS\.godot\mono\temp\bin\Debug\GodotSharpEditor.dll
+C:\Users\hugod\OneDrive\Documents\Projects_Godot\RTS\.godot\mono\temp\obj\Debug\Projects Godot.csproj.CopyComplete
+C:\Users\hugod\OneDrive\Documents\Projects_Godot\RTS\.godot\mono\temp\obj\Debug\Projects Godot.dll
+C:\Users\hugod\OneDrive\Documents\Projects_Godot\RTS\.godot\mono\temp\obj\Debug\refint\Projects Godot.dll
+C:\Users\hugod\OneDrive\Documents\Projects_Godot\RTS\.godot\mono\temp\obj\Debug\Projects Godot.pdb
+C:\Users\hugod\OneDrive\Documents\Projects_Godot\RTS\.godot\mono\temp\obj\Debug\Projects Godot.genruntimeconfig.cache
+C:\Users\hugod\OneDrive\Documents\Projects_Godot\RTS\.godot\mono\temp\obj\Debug\ref\Projects Godot.dll
+C:\Users\Eigenaar\OneDrive\Documents\Projects_Godot\RTS\.godot\mono\temp\bin\Debug\Projects Godot.deps.json
+C:\Users\Eigenaar\OneDrive\Documents\Projects_Godot\RTS\.godot\mono\temp\bin\Debug\Projects Godot.runtimeconfig.json
+C:\Users\Eigenaar\OneDrive\Documents\Projects_Godot\RTS\.godot\mono\temp\bin\Debug\Projects Godot.dll
+C:\Users\Eigenaar\OneDrive\Documents\Projects_Godot\RTS\.godot\mono\temp\bin\Debug\Projects Godot.pdb
+C:\Users\Eigenaar\OneDrive\Documents\Projects_Godot\RTS\.godot\mono\temp\bin\Debug\GodotSharp.dll
+C:\Users\Eigenaar\OneDrive\Documents\Projects_Godot\RTS\.godot\mono\temp\bin\Debug\GodotSharpEditor.dll
+C:\Users\Eigenaar\OneDrive\Documents\Projects_Godot\RTS\.godot\mono\temp\obj\Debug\Projects Godot.csproj.AssemblyReference.cache
+C:\Users\Eigenaar\OneDrive\Documents\Projects_Godot\RTS\.godot\mono\temp\obj\Debug\Projects Godot.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Eigenaar\OneDrive\Documents\Projects_Godot\RTS\.godot\mono\temp\obj\Debug\Projects Godot.AssemblyInfoInputs.cache
+C:\Users\Eigenaar\OneDrive\Documents\Projects_Godot\RTS\.godot\mono\temp\obj\Debug\Projects Godot.AssemblyInfo.cs
+C:\Users\Eigenaar\OneDrive\Documents\Projects_Godot\RTS\.godot\mono\temp\obj\Debug\Projects Godot.csproj.CoreCompileInputs.cache
+C:\Users\Eigenaar\OneDrive\Documents\Projects_Godot\RTS\.godot\mono\temp\obj\Debug\Projects Godot.sourcelink.json
+C:\Users\Eigenaar\OneDrive\Documents\Projects_Godot\RTS\.godot\mono\temp\obj\Debug\Projects Godot.csproj.CopyComplete
+C:\Users\Eigenaar\OneDrive\Documents\Projects_Godot\RTS\.godot\mono\temp\obj\Debug\Projects Godot.dll
+C:\Users\Eigenaar\OneDrive\Documents\Projects_Godot\RTS\.godot\mono\temp\obj\Debug\refint\Projects Godot.dll
+C:\Users\Eigenaar\OneDrive\Documents\Projects_Godot\RTS\.godot\mono\temp\obj\Debug\Projects Godot.pdb
+C:\Users\Eigenaar\OneDrive\Documents\Projects_Godot\RTS\.godot\mono\temp\obj\Debug\Projects Godot.genruntimeconfig.cache
+C:\Users\Eigenaar\OneDrive\Documents\Projects_Godot\RTS\.godot\mono\temp\obj\Debug\ref\Projects Godot.dll
+C:\Users\Eigenaar\OneDrive\Documents\Projects_Godot\Farming-Game\.godot\mono\temp\bin\Debug\Projects Godot.deps.json
+C:\Users\Eigenaar\OneDrive\Documents\Projects_Godot\Farming-Game\.godot\mono\temp\bin\Debug\Projects Godot.runtimeconfig.json
+C:\Users\Eigenaar\OneDrive\Documents\Projects_Godot\Farming-Game\.godot\mono\temp\bin\Debug\Projects Godot.dll
+C:\Users\Eigenaar\OneDrive\Documents\Projects_Godot\Farming-Game\.godot\mono\temp\bin\Debug\Projects Godot.pdb
+C:\Users\Eigenaar\OneDrive\Documents\Projects_Godot\Farming-Game\.godot\mono\temp\bin\Debug\GodotSharp.dll
+C:\Users\Eigenaar\OneDrive\Documents\Projects_Godot\Farming-Game\.godot\mono\temp\bin\Debug\GodotSharpEditor.dll
+C:\Users\Eigenaar\OneDrive\Documents\Projects_Godot\Farming-Game\.godot\mono\temp\obj\Debug\Projects Godot.csproj.AssemblyReference.cache
+C:\Users\Eigenaar\OneDrive\Documents\Projects_Godot\Farming-Game\.godot\mono\temp\obj\Debug\Projects Godot.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Eigenaar\OneDrive\Documents\Projects_Godot\Farming-Game\.godot\mono\temp\obj\Debug\Projects Godot.AssemblyInfoInputs.cache
+C:\Users\Eigenaar\OneDrive\Documents\Projects_Godot\Farming-Game\.godot\mono\temp\obj\Debug\Projects Godot.AssemblyInfo.cs
+C:\Users\Eigenaar\OneDrive\Documents\Projects_Godot\Farming-Game\.godot\mono\temp\obj\Debug\Projects Godot.csproj.CoreCompileInputs.cache
+C:\Users\Eigenaar\OneDrive\Documents\Projects_Godot\Farming-Game\.godot\mono\temp\obj\Debug\Projects Godot.sourcelink.json
+C:\Users\Eigenaar\OneDrive\Documents\Projects_Godot\Farming-Game\.godot\mono\temp\obj\Debug\Projects Godot.csproj.CopyComplete
+C:\Users\Eigenaar\OneDrive\Documents\Projects_Godot\Farming-Game\.godot\mono\temp\obj\Debug\Projects Godot.dll
+C:\Users\Eigenaar\OneDrive\Documents\Projects_Godot\Farming-Game\.godot\mono\temp\obj\Debug\refint\Projects Godot.dll
+C:\Users\Eigenaar\OneDrive\Documents\Projects_Godot\Farming-Game\.godot\mono\temp\obj\Debug\Projects Godot.pdb
+C:\Users\Eigenaar\OneDrive\Documents\Projects_Godot\Farming-Game\.godot\mono\temp\obj\Debug\Projects Godot.genruntimeconfig.cache
+C:\Users\Eigenaar\OneDrive\Documents\Projects_Godot\Farming-Game\.godot\mono\temp\obj\Debug\ref\Projects Godot.dll
+C:\Users\hugod\OneDrive\Documents\Projects_Godot\Farming-Game\.godot\mono\temp\bin\Debug\Projects Godot.deps.json
+C:\Users\hugod\OneDrive\Documents\Projects_Godot\Farming-Game\.godot\mono\temp\bin\Debug\Projects Godot.runtimeconfig.json
+C:\Users\hugod\OneDrive\Documents\Projects_Godot\Farming-Game\.godot\mono\temp\bin\Debug\Projects Godot.dll
+C:\Users\hugod\OneDrive\Documents\Projects_Godot\Farming-Game\.godot\mono\temp\bin\Debug\Projects Godot.pdb
+C:\Users\hugod\OneDrive\Documents\Projects_Godot\Farming-Game\.godot\mono\temp\bin\Debug\GodotSharp.dll
+C:\Users\hugod\OneDrive\Documents\Projects_Godot\Farming-Game\.godot\mono\temp\bin\Debug\GodotSharpEditor.dll
+C:\Users\hugod\OneDrive\Documents\Projects_Godot\Farming-Game\.godot\mono\temp\obj\Debug\Projects Godot.csproj.AssemblyReference.cache
+C:\Users\hugod\OneDrive\Documents\Projects_Godot\Farming-Game\.godot\mono\temp\obj\Debug\Projects Godot.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\hugod\OneDrive\Documents\Projects_Godot\Farming-Game\.godot\mono\temp\obj\Debug\Projects Godot.AssemblyInfoInputs.cache
+C:\Users\hugod\OneDrive\Documents\Projects_Godot\Farming-Game\.godot\mono\temp\obj\Debug\Projects Godot.AssemblyInfo.cs
+C:\Users\hugod\OneDrive\Documents\Projects_Godot\Farming-Game\.godot\mono\temp\obj\Debug\Projects Godot.csproj.CoreCompileInputs.cache
+C:\Users\hugod\OneDrive\Documents\Projects_Godot\Farming-Game\.godot\mono\temp\obj\Debug\Projects Godot.sourcelink.json
+C:\Users\hugod\OneDrive\Documents\Projects_Godot\Farming-Game\.godot\mono\temp\obj\Debug\Projects Godot.csproj.CopyComplete
+C:\Users\hugod\OneDrive\Documents\Projects_Godot\Farming-Game\.godot\mono\temp\obj\Debug\Projects Godot.dll
+C:\Users\hugod\OneDrive\Documents\Projects_Godot\Farming-Game\.godot\mono\temp\obj\Debug\refint\Projects Godot.dll
+C:\Users\hugod\OneDrive\Documents\Projects_Godot\Farming-Game\.godot\mono\temp\obj\Debug\Projects Godot.pdb
+C:\Users\hugod\OneDrive\Documents\Projects_Godot\Farming-Game\.godot\mono\temp\obj\Debug\Projects Godot.genruntimeconfig.cache
+C:\Users\hugod\OneDrive\Documents\Projects_Godot\Farming-Game\.godot\mono\temp\obj\Debug\ref\Projects Godot.dll

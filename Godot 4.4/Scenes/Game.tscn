@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://cl1c11831omqo"]
+
+[ext_resource type="PackedScene" uid="uid://dnqluvptpfts0" path="res://Scenes/Components/Char.tscn" id="1_iukft"]
+[ext_resource type="Texture2D" uid="uid://chf0w5qgf031a" path="res://Graphics/Tex/PixelTextureGrid_96.png" id="2_gl6un"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j5yw3"]
+albedo_texture = ExtResource("2_gl6un")
+uv1_scale = Vector3(10, 10, 10)
+uv1_triplanar = true
+uv1_triplanar_sharpness = 150.0
+texture_filter = 0
+
+[sub_resource type="BoxMesh" id="BoxMesh_kldst"]
+
+[node name="Game" type="Node3D"]
+
+[node name="Char" parent="." instance=ExtResource("1_iukft")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(33.15, 0, 0, 0, 0.2, 0, 0, 0, 34.16, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_j5yw3")
+mesh = SubResource("BoxMesh_kldst")

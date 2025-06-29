@@ -1,0 +1,15 @@
+res://Packages/Objects/Main.tscn
+res://Packages/Objects/Game.tscn
+res://Packages/Placeable/Soil.tscn
+res://Scripts/debug/DebugNode.cs
+res://Scripts/debug/Fps.cs
+res://Scripts/Frontend/Features/ControllerCharacter.cs
+res://Scripts/Frontend/Features/CropController.cs
+res://Scripts/Frontend/Features/DemolitionTool.cs
+res://Scripts/Frontend/Features/PlacingGridHandler.cs
+res://Scripts/Frontend/Features/PlacingPlotBorder.cs
+res://Scripts/Frontend/Features/PlacingVoxelGridHandler.cs
+res://Scripts/Frontend/Interface/CommandConsole.cs
+res://Scripts/Frontend/Interface/Inventory.cs
+res://Scripts/Frontend/Interface/MouseCursor.cs
+res://Packages/Objects/Character.tscn

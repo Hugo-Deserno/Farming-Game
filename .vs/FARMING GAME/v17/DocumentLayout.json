@@ -3,8 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\hugod\\OneDrive\\Documents\\Fragmatic-Projects\\farming-game\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{237968B3-269E-47FF-92BD-B77880B4C0E6}|Farming Game.csproj|c:\\users\\hugod\\onedrive\\documents\\fragmatic-projects\\farming-game\\scripts\\test.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{237968B3-269E-47FF-92BD-B77880B4C0E6}|Farming Game.csproj|solutionrelative:scripts\\test.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{1560EE15-30DF-417B-A7E0-E7259463DEDF}|Farming Game.csproj|c:\\users\\hugod\\onedrive\\documents\\fragmatic-projects\\farming-game\\scripts\\common\\camera.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1560EE15-30DF-417B-A7E0-E7259463DEDF}|Farming Game.csproj|solutionrelative:scripts\\common\\camera.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1560EE15-30DF-417B-A7E0-E7259463DEDF}|Farming Game.csproj|c:\\users\\hugod\\onedrive\\documents\\fragmatic-projects\\farming-game\\scripts\\newscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1560EE15-30DF-417B-A7E0-E7259463DEDF}|Farming Game.csproj|solutionrelative:scripts\\newscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -21,20 +25,29 @@
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "NewScript.cs",
+              "DocumentMoniker": "C:\\Users\\hugod\\OneDrive\\Documents\\Fragmatic-Projects\\farming-game\\Scripts\\NewScript.cs",
+              "RelativeDocumentMoniker": "Scripts\\NewScript.cs",
+              "ToolTip": "C:\\Users\\hugod\\OneDrive\\Documents\\Fragmatic-Projects\\farming-game\\Scripts\\NewScript.cs",
+              "RelativeToolTip": "Scripts\\NewScript.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-28T12:56:07.302Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "test.cs",
-              "DocumentMoniker": "C:\\Users\\hugod\\OneDrive\\Documents\\Fragmatic-Projects\\farming-game\\Scripts\\test.cs",
-              "RelativeDocumentMoniker": "Scripts\\test.cs",
-              "ToolTip": "C:\\Users\\hugod\\OneDrive\\Documents\\Fragmatic-Projects\\farming-game\\Scripts\\test.cs",
-              "RelativeToolTip": "Scripts\\test.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Title": "Camera.cs",
+              "DocumentMoniker": "C:\\Users\\hugod\\OneDrive\\Documents\\Fragmatic-Projects\\farming-game\\Scripts\\Common\\Camera.cs",
+              "RelativeDocumentMoniker": "Scripts\\Common\\Camera.cs",
+              "ToolTip": "C:\\Users\\hugod\\OneDrive\\Documents\\Fragmatic-Projects\\farming-game\\Scripts\\Common\\Camera.cs",
+              "RelativeToolTip": "Scripts\\Common\\Camera.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-26T18:21:34.168Z",
+              "WhenOpened": "2025-06-28T12:55:46.702Z",
               "EditorCaption": ""
             }
           ]
