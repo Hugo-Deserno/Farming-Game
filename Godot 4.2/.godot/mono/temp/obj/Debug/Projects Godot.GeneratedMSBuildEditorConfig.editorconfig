@@ -1,6 +1,6 @@
 is_global = true
 build_property.GodotDisabledSourceGenerators = 
-build_property.GodotProjectDir = c:\Users\hugod\OneDrive\Documents\Fragmatic-Projects\farming-game\Godot 4.2 copy\
+build_property.GodotProjectDir = c:\Users\hugod\OneDrive\Documents\Fragmatic-Projects\farming-game\Godot 4.2\
 build_property.GodotProjectDirBase64 = 
 build_property.GodotSourceGenerators = 
 build_property.IsGodotToolsProject = 
@@ -13,6 +13,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = ProjectsGodot
-build_property.ProjectDir = c:\Users\hugod\OneDrive\Documents\Fragmatic-Projects\farming-game\Godot 4.2 copy\
+build_property.ProjectDir = c:\Users\hugod\OneDrive\Documents\Fragmatic-Projects\farming-game\Godot 4.2\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

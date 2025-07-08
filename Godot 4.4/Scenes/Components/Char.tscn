@@ -4,10 +4,14 @@
 
 [node name="Char" type="Node3D"]
 script = ExtResource("1_4qps0")
+metadata/CameraSpeed = 0.02
+metadata/CameraPitch = -60.0
+metadata/Sensitivity = 0.005
+metadata/CameraHeight = 1.5
 
 [node name="RotateAxel" type="Node3D" parent="."]
 
 [node name="Head" type="Node3D" parent="RotateAxel"]
-transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 3, 3)
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866026, 0, -0.866026, 0.5, 0, 3, 3)
 
 [node name="Camera3D" type="Camera3D" parent="RotateAxel/Head"]

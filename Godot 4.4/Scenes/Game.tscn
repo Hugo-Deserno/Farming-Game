@@ -15,8 +15,12 @@ texture_filter = 0
 [node name="Game" type="Node3D"]
 
 [node name="Char" parent="." instance=ExtResource("1_iukft")]
+metadata/CameraHeight = 1.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(33.15, 0, 0, 0, 0.2, 0, 0, 0, 34.16, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_j5yw3")
 mesh = SubResource("BoxMesh_kldst")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.722207, 0.691677, 0, -0.691677, 0.722207, -0.120015, 0, 0)
